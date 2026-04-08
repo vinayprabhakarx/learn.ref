@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="DSA Reference — Data Structures & Algorithms quick reference with complexity, common problems, and use cases." />
+  <title>DSA Reference</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    /* Prevent flash of wrong theme on load */
+    (function() {
+      try {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <main class="wrap">
+    <header class="app-header">
+      <h1 class="app-title">DSA Reference</h1>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark theme" title="Toggle dark theme">
+        <span class="icon-sun" aria-hidden="true">☀️</span>
+        <span class="icon-moon" aria-hidden="true">🌙</span>
+      </button>
+    </header>
+
+    <nav class="tabs" id="tabs" aria-label="Category filters"></nav>
+
+    <search>
+      <input class="search-input" id="search" type="search" placeholder="Search topics or problems..." aria-label="Search DSA topics" />
+    </search>
+
+    <section class="grid" id="grid" aria-label="DSA topic cards"></section>
+  </main>
+
+  <!-- ── Card template ── -->
+  <template id="card-template">
+    <article class="card" tabindex="0">
+      <header class="card-head">
+        <span class="badge"></span>
+        <h2 class="card-title"></h2>
+        <span class="chevron" aria-hidden="true">&#9658;</span>
+      </header>
+      <div class="card-body">
+        <div class="card-inner">
+          <p class="desc"></p>
+          <h3 class="section-label">Complexity</h3>
+          <dl class="ops"></dl>
+          <h3 class="section-label">Common problems &amp; use cases</h3>
+          <ul class="uses-grid"></ul>
+          <button class="ask-btn" type="button">Get practice problems ↗</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <!-- ── Operation item template ── -->
+  <template id="op-template">
+    <div class="op-item">
+      <dt class="op-name"></dt>
+      <dd class="op-tc"></dd>
+    </div>
+  </template>
+
+  <!-- ── Use-case tag template ── -->
+  <template id="use-template">
+    <li class="use-tag" tabindex="0" role="button"></li>
+  </template>
+
+  <!-- ── Empty state template ── -->
+  <template id="empty-template">
+    <p class="empty"></p>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
