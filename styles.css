@@ -129,6 +129,7 @@ html, body {
   touch-action: manipulation;
   min-height: var(--tap-target-min);
   min-width: var(--tap-target-min);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .theme-toggle:hover {
