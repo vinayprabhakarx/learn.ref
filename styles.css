@@ -1040,22 +1040,18 @@ body {
 
 .algo-card-head {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: var(--space-xl);
-  padding: var(--space-xl) 1.1rem;
-  /* increased padding to prevent "sticking" */
+  padding: var(--space-lg) 1.1rem;
   cursor: pointer;
   user-select: none;
-  position: relative;
 }
 
 .algo-card-name {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
-  flex: none;
-  /* remove flex: 1 for centered grouping */
+  flex: 1;
   margin: 0;
 }
 
@@ -1077,8 +1073,6 @@ body {
   font-size: var(--font-size-sm);
   color: var(--color-text-tertiary);
   transition: transform var(--transition-slow);
-  position: absolute;
-  right: 1.1rem;
 }
 
 .algo-card.algo-open .algo-chevron {
@@ -1110,10 +1104,6 @@ body {
   overflow: hidden;
   min-height: 0;
   padding: 0 1.1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* center the internal content */
   transition: padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
