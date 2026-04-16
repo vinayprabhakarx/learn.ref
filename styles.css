@@ -443,7 +443,6 @@ body {
   border: 0.5px solid var(--color-border-tertiary);
   border-radius: var(--radius-lg);
   padding: 0;
-  /* padding moved to children for compact collapsed state */
   cursor: pointer;
   touch-action: manipulation;
   transition: border-color var(--transition-normal);
@@ -560,7 +559,6 @@ body {
 
 .ds-card-inner {
   padding: 0 1.1rem 1.1rem;
-  /* left/right/bottom padding for the body content */
 }
 
 .ds-section-label,
