@@ -41,7 +41,7 @@
       "algos": [
         {
           "name": "Two Pointers",
-          "desc": "Uses two indices moving toward each other or in the same direction to solve problems in O(n) instead of O(n\u00b2). Ideal for sorted arrays and substring problems.",
+          "desc": "Uses two indices moving toward each other or in the same direction to solve problems in O(n) instead of O(n²). Ideal for sorted arrays and substring problems.",
           "approach": [
             "Sort the array if needed",
             "Initialize left = 0, right = n-1 (or both at start for same-direction)",
@@ -194,7 +194,18 @@
           },
           "code": "public int linearSearch(int[] arr, int target) {\n  for (int i = 0; i < arr.length; i++) {\n    if (arr[i] == target) {\n      return i;\n    }\n  }\n  return -1;\n}",
           "tip": "Fundamental fallback when elements are entirely unsorted or when you must guarantee exhaustive evaluation.",
-          "questions": []
+          "questions": [
+            {
+              "name": "Find the Duplicate Number",
+              "diff": "Medium",
+              "tag": "LC #287"
+            },
+            {
+              "name": "Search in Rotated Sorted Array",
+              "diff": "Medium",
+              "tag": "LC #33"
+            }
+          ]
         }
       ],
       "accent": {
@@ -210,7 +221,7 @@
           "name": "Merge Sort",
           "desc": "Divide-and-conquer algorithm. Splits array into halves, recursively sorts, then merges. Stable sort, guaranteed O(n log n).",
           "approach": [
-            "Base case: array of size \u2264 1 is sorted",
+            "Base case: array of size ≤ 1 is sorted",
             "Find mid = (low + high) / 2",
             "Recursively sort left half and right half",
             "Merge two sorted halves into auxiliary array",
@@ -254,16 +265,16 @@
             "Choose pivot (last element, random, or median-of-3)",
             "Partition: rearrange so all < pivot are left, all > pivot are right",
             "Recursively apply to left and right partitions",
-            "Randomize pivot to avoid O(n\u00b2) worst case"
+            "Randomize pivot to avoid O(n²) worst case"
           ],
           "complexities": {
             "best": "O(n log n)",
             "avg": "O(n log n)",
-            "worst": "O(n\u00b2)",
+            "worst": "O(n²)",
             "space": "O(log n)"
           },
           "code": "void quickSort(int[] arr, int lo, int hi) {\n  if (lo >= hi) return;\n  int p = partition(arr, lo, hi);\n  quickSort(arr, lo, p-1);\n  quickSort(arr, p+1, hi);\n}\nint partition(int[] arr, int lo, int hi) {\n  int pivot = arr[hi], i = lo - 1;\n  for (int j = lo; j < hi; j++)\n    if (arr[j] <= pivot) swap(arr, ++i, j);\n  swap(arr, i+1, hi);\n  return i + 1;\n}",
-          "tip": "Use randomized pivot to avoid O(n\u00b2) on sorted input. Dutch flag partition handles duplicates efficiently.",
+          "tip": "Use randomized pivot to avoid O(n²) on sorted input. Dutch flag partition handles duplicates efficiently.",
           "questions": [
             {
               "name": "Kth Largest Element in Array",
@@ -298,7 +309,7 @@
             "space": "O(1)"
           },
           "code": "void heapSort(int[] arr) {\n  int n = arr.length;\n  for (int i = n/2-1; i >= 0; i--) heapify(arr, n, i);\n  for (int i = n-1; i > 0; i--) {\n    swap(arr, 0, i);\n    heapify(arr, i, 0);\n  }\n}\nvoid heapify(int[] arr, int n, int i) {\n  int largest = i, l = 2*i+1, r = 2*i+2;\n  if (l < n && arr[l] > arr[largest]) largest = l;\n  if (r < n && arr[r] > arr[largest]) largest = r;\n  if (largest != i) { swap(arr, i, largest); heapify(arr, n, largest); }\n}",
-          "tip": "Guaranteed O(n log n) and O(1) space \u2014 best of both worlds, but poor cache performance makes it slower than quicksort in practice.",
+          "tip": "Guaranteed O(n log n) and O(1) space — best of both worlds, but poor cache performance makes it slower than quicksort in practice.",
           "questions": [
             {
               "name": "Kth Largest Element",
@@ -328,13 +339,24 @@
           ],
           "complexities": {
             "best": "O(n)",
-            "avg": "O(n\u00b2)",
-            "worst": "O(n\u00b2)",
+            "avg": "O(n²)",
+            "worst": "O(n²)",
             "space": "O(1)"
           },
           "code": "public void bubbleSort(int[] arr) {\n  boolean swapped;\n  for (int i = 0; i < arr.length - 1; i++) {\n    swapped = false;\n    for (int j = 0; j < arr.length - i - 1; j++) {\n      if (arr[j] > arr[j + 1]) {\n        int temp = arr[j];\n        arr[j] = arr[j + 1];\n        arr[j + 1] = temp;\n        swapped = true;\n      }\n    }\n    if (!swapped) break;\n  }\n}",
           "tip": "Rarely used in practice due to poor performance, but often asked as a conceptual or warm-up question.",
-          "questions": []
+          "questions": [
+            {
+              "name": "Sort an Array",
+              "diff": "Medium",
+              "tag": "LC #912"
+            },
+            {
+              "name": "Sort Colors",
+              "diff": "Medium",
+              "tag": "LC #75"
+            }
+          ]
         },
         {
           "name": "Selection Sort",
@@ -345,14 +367,25 @@
             "Swap the minimum element with the current position."
           ],
           "complexities": {
-            "best": "O(n\u00b2)",
-            "avg": "O(n\u00b2)",
-            "worst": "O(n\u00b2)",
+            "best": "O(n²)",
+            "avg": "O(n²)",
+            "worst": "O(n²)",
             "space": "O(1)"
           },
           "code": "public void selectionSort(int[] arr) {\n  for (int i = 0; i < arr.length - 1; i++) {\n    int minIdx = i;\n    for (int j = i + 1; j < arr.length; j++) {\n      if (arr[j] < arr[minIdx]) minIdx = j;\n    }\n    int temp = arr[minIdx];\n    arr[minIdx] = arr[i];\n    arr[i] = temp;\n  }\n}",
           "tip": "Maintains minimal number of swaps (O(n) swaps overall), which can be useful when memory write operations are heavily penalized.",
-          "questions": []
+          "questions": [
+            {
+              "name": "Sort an Array",
+              "diff": "Medium",
+              "tag": "LC #912"
+            },
+            {
+              "name": "Minimum Number of Swaps to Sort",
+              "diff": "Medium",
+              "tag": "GFG"
+            }
+          ]
         },
         {
           "name": "Insertion Sort",
@@ -365,13 +398,24 @@
           ],
           "complexities": {
             "best": "O(n)",
-            "avg": "O(n\u00b2)",
-            "worst": "O(n\u00b2)",
+            "avg": "O(n²)",
+            "worst": "O(n²)",
             "space": "O(1)"
           },
           "code": "public void insertionSort(int[] arr) {\n  for (int i = 1; i < arr.length; i++) {\n    int key = arr[i];\n    int j = i - 1;\n    while (j >= 0 && arr[j] > key) {\n      arr[j + 1] = arr[j];\n      j = j - 1;\n    }\n    arr[j + 1] = key;\n  }\n}",
           "tip": "Highly efficient for very small datasets or naturally mostly-sorted arrays (O(n) time).",
-          "questions": []
+          "questions": [
+            {
+              "name": "Insertion Sort List",
+              "diff": "Medium",
+              "tag": "LC #147"
+            },
+            {
+              "name": "Sort an Array",
+              "diff": "Medium",
+              "tag": "LC #912"
+            }
+          ]
         },
         {
           "name": "Counting / Radix / Bucket Sort",
@@ -458,13 +502,13 @@
           "approach": [
             "Identify the search space: [lo, hi] = [min_answer, max_answer]",
             "Write a canAchieve(mid) boolean function",
-            "Binary search: if canAchieve(mid) \u2192 move right, else move left",
+            "Binary search: if canAchieve(mid) → move right, else move left",
             "Return lo at the end"
           ],
           "complexities": {
-            "best": "O(log(range) \u00d7 check)",
-            "avg": "O(log(range) \u00d7 check)",
-            "worst": "O(log(range) \u00d7 check)",
+            "best": "O(log(range) × check)",
+            "avg": "O(log(range) × check)",
+            "worst": "O(log(range) × check)",
             "space": "O(1)"
           },
           "code": "// Capacity to ship packages in D days\nint shipWithinDays(int[] w, int days) {\n  int lo = Arrays.stream(w).max().getAsInt();\n  int hi = Arrays.stream(w).sum();\n  while (lo < hi) {\n    int mid = lo + (hi - lo) / 2;\n    if (canShip(w, days, mid)) hi = mid;\n    else lo = mid + 1;\n  }\n  return lo;\n}",
@@ -494,6 +538,51 @@
               "name": "Aggressive Cows (GFG)",
               "diff": "Medium",
               "tag": "GFG"
+            }
+          ]
+        },
+        {
+          "name": "Binary Search on Rotated / 2D Matrix",
+          "desc": "Variants of binary search applied to arrays that have been rotated at an unknown pivot, or to row-wise and column-wise sorted 2D matrices.",
+          "approach": [
+            "Rotated array: determine which half is sorted using arr[lo] <= arr[mid]",
+            "Check if target lies in the sorted half; adjust lo/hi accordingly",
+            "2D matrix (LC #74): treat as flattened 1D array — row = mid/cols, col = mid%cols",
+            "Search Matrix II (LC #240): start from top-right, move left if curr > target, down if curr < target"
+          ],
+          "complexities": {
+            "best": "O(1)",
+            "avg": "O(log n)",
+            "worst": "O(log n)",
+            "space": "O(1)"
+          },
+          "code": "// Search in Rotated Sorted Array\nint searchRotated(int[] arr, int target) {\n  int lo = 0, hi = arr.length - 1;\n  while (lo <= hi) {\n    int mid = lo + (hi - lo) / 2;\n    if (arr[mid] == target) return mid;\n    if (arr[lo] <= arr[mid]) {\n      if (arr[lo] <= target && target < arr[mid]) hi = mid - 1;\n      else lo = mid + 1;\n    } else {\n      if (arr[mid] < target && target <= arr[hi]) lo = mid + 1;\n      else hi = mid - 1;\n    }\n  }\n  return -1;\n}",
+          "tip": "For rotated arrays, one half is always sorted — identify which half and check if target is inside it. For 2D, index mapping is the key insight.",
+          "questions": [
+            {
+              "name": "Search in Rotated Sorted Array",
+              "diff": "Medium",
+              "tag": "LC #33"
+            },
+            {
+              "name": "Search in Rotated Sorted Array II",
+              "diff": "Medium",
+              "tag": "LC #81"
+            },
+            {
+              "name": "Find Minimum in Rotated Array",
+              "diff": "Medium",
+              "tag": "LC #153"
+            },
+            {
+              "name": "Search a 2D Matrix",
+              "diff": "Medium",
+              "tag": "LC #74"
+            },
+            {
+              "name": "Search a 2D Matrix II",
+              "diff": "Medium",
+              "tag": "LC #240"
             }
           ]
         }
@@ -599,26 +688,43 @@
           ]
         },
         {
-          "name": "Linked List Basics",
-          "desc": "A linear collection of data elements where order is not given by physical placement in memory. Each element points to the next.",
+          "name": "Merge & Sort Linked Lists",
+          "desc": "Merging two or more sorted linked lists by relinking nodes in order. Foundation for merge sort on linked lists and merging K sorted lists.",
           "approach": [
-            "Maintain a pointer to the head.",
-            "Traverse sequentially using 'current = current.next'.",
-            "To modify links, carefully maintain previous node references."
+            "Use a dummy head node to simplify edge cases",
+            "Compare heads of both lists; attach the smaller node to result",
+            "Advance pointer of the list whose node was used",
+            "Attach the remaining non-null list at the end",
+            "For K lists: use a min-heap of (value, node) pairs; poll and push next"
           ],
           "complexities": {
-            "best": "O(1) (prepend)",
-            "avg": "O(n) (search/access)",
-            "worst": "O(n)",
-            "space": "O(n)"
+            "best": "O(n + m)",
+            "avg": "O(n + m)",
+            "worst": "O(n log k) for K lists",
+            "space": "O(1) merge / O(k) heap"
           },
-          "code": "public ListNode reverseList(ListNode head) {\n  ListNode prev = null;\n  ListNode curr = head;\n  while (curr != null) {\n    ListNode nextNode = curr.next;\n    curr.next = prev;\n    prev = curr;\n    curr = nextNode;\n  }\n  return prev;\n}",
-          "tip": "Keep an eye on dummy head strategies to avoid painful edge cases when deleting or inserting at the head.",
+          "code": "ListNode mergeTwoLists(ListNode l1, ListNode l2) {\n  ListNode dummy = new ListNode(0), cur = dummy;\n  while (l1 != null && l2 != null) {\n    if (l1.val <= l2.val) { cur.next = l1; l1 = l1.next; }\n    else { cur.next = l2; l2 = l2.next; }\n    cur = cur.next;\n  }\n  cur.next = l1 != null ? l1 : l2;\n  return dummy.next;\n}",
+          "tip": "Always use a dummy head — it eliminates special-casing the first node. For K lists, a min-heap gives O(n log k) vs O(nk) brute force.",
           "questions": [
             {
-              "name": "Reverse Linked List",
+              "name": "Merge Two Sorted Lists",
               "diff": "Easy",
-              "tag": "LC #206"
+              "tag": "LC #21"
+            },
+            {
+              "name": "Merge k Sorted Lists",
+              "diff": "Hard",
+              "tag": "LC #23"
+            },
+            {
+              "name": "Sort List",
+              "diff": "Medium",
+              "tag": "LC #148"
+            },
+            {
+              "name": "Remove Nth Node From End",
+              "diff": "Medium",
+              "tag": "LC #19"
             }
           ]
         }
@@ -637,7 +743,7 @@
           "desc": "Preorder (root-left-right), Inorder (left-root-right), Postorder (left-right-root). Both recursive and iterative.",
           "approach": [
             "Preorder: process node, recurse left, recurse right",
-            "Inorder: recurse left, process node, recurse right (BST \u2192 sorted order)",
+            "Inorder: recurse left, process node, recurse right (BST → sorted order)",
             "Postorder: recurse left, recurse right, process node",
             "Iterative: use explicit stack; inorder uses stack + pointer pattern"
           ],
@@ -686,9 +792,9 @@
           "name": "BST Operations",
           "desc": "Binary Search Tree: left < root < right. Supports search, insert, delete in O(log n) average.",
           "approach": [
-            "Search: compare with root \u2192 go left or right recursively",
+            "Search: compare with root → go left or right recursively",
             "Insert: recurse to correct leaf position, insert node",
-            "Delete: three cases \u2014 no child, one child, two children (replace with inorder successor)",
+            "Delete: three cases — no child, one child, two children (replace with inorder successor)",
             "Validate BST: pass min/max bounds down recursively"
           ],
           "complexities": {
@@ -698,7 +804,7 @@
             "space": "O(h)"
           },
           "code": "TreeNode deleteNode(TreeNode root, int key) {\n  if (root == null) return null;\n  if (key < root.val) root.left = deleteNode(root.left, key);\n  else if (key > root.val) root.right = deleteNode(root.right, key);\n  else {\n    if (root.left == null) return root.right;\n    if (root.right == null) return root.left;\n    TreeNode succ = root.right;\n    while (succ.left != null) succ = succ.left;\n    root.val = succ.val;\n    root.right = deleteNode(root.right, succ.val);\n  }\n  return root;\n}",
-          "tip": "For BST validation, pass (min, max) bounds \u2014 not just parent comparison. Inorder traverse to check if sorted.",
+          "tip": "For BST validation, pass (min, max) bounds — not just parent comparison. Inorder traverse to check if sorted.",
           "questions": [
             {
               "name": "Validate Binary Search Tree",
@@ -790,7 +896,7 @@
           "approach": [
             "For K-largest: maintain min-heap of size K. If heap > K, poll",
             "For K-smallest: maintain max-heap of size K",
-            "For median: use two heaps \u2014 maxHeap (lower half) + minHeap (upper half)",
+            "For median: use two heaps — maxHeap (lower half) + minHeap (upper half)",
             "Poll top K elements for result"
           ],
           "complexities": {
@@ -835,26 +941,47 @@
           ]
         },
         {
-          "name": "Heap (Priority Queue) Basics",
-          "desc": "A specialized tree-based data structure that satisfies the heap property. In a Max Heap, the largest key is always at the top.",
+          "name": "Heap for Interval & Scheduling Problems",
+          "desc": "Priority queues are ideal for interval scheduling: tracking the earliest ending meeting, allocating rooms, or greedily picking the next task.",
           "approach": [
-            "Insertions and deletions maintain the heap property via 'bubble up' and 'bubble down'.",
-            "Allows O(1) access to min or max.",
-            "In Java, use PriorityQueue."
+            "Sort intervals by start time",
+            "Use a min-heap keyed on end time to track active intervals",
+            "For each new interval: if heap top (earliest end) <= current start, reuse/pop that slot",
+            "Otherwise push a new entry — heap size at peak = answer (e.g. min rooms needed)"
           ],
           "complexities": {
-            "best": "O(1) (peek)",
-            "avg": "O(log n) (insert/remove)",
-            "worst": "O(log n)",
+            "best": "O(n log n)",
+            "avg": "O(n log n)",
+            "worst": "O(n log n)",
             "space": "O(n)"
           },
-          "code": "public int findKthLargest(int[] nums, int k) {\n  PriorityQueue<Integer> minHeap = new PriorityQueue<>();\n  for (int num : nums) {\n    minHeap.offer(num);\n    if (minHeap.size() > k) {\n      minHeap.poll();\n    }\n  }\n  return minHeap.peek();\n}",
-          "tip": "Extremely useful for 'Kth Largest/Smallest' problems, processing intervals scheduling, and Dijkstra's.",
+          "code": "// Meeting Rooms II — min rooms required\nint minMeetingRooms(int[][] intervals) {\n  Arrays.sort(intervals, (a, b) -> a[0] - b[0]);\n  PriorityQueue<Integer> endTimes = new PriorityQueue<>();\n  for (int[] iv : intervals) {\n    if (!endTimes.isEmpty() && endTimes.peek() <= iv[0])\n      endTimes.poll();\n    endTimes.offer(iv[1]);\n  }\n  return endTimes.size();\n}",
+          "tip": "Sort by start time first, then use a min-heap on end times. Heap size = rooms in use. If earliest end <= new start, recycle that room.",
           "questions": [
             {
-              "name": "Kth Largest Element in an Array",
+              "name": "Meeting Rooms II",
               "diff": "Medium",
-              "tag": "LC #215"
+              "tag": "LC #253"
+            },
+            {
+              "name": "Task Scheduler",
+              "diff": "Medium",
+              "tag": "LC #621"
+            },
+            {
+              "name": "Reorganize String",
+              "diff": "Medium",
+              "tag": "LC #767"
+            },
+            {
+              "name": "Maximum CPU Load",
+              "diff": "Medium",
+              "tag": "GFG"
+            },
+            {
+              "name": "Find Right Interval",
+              "diff": "Medium",
+              "tag": "LC #436"
             }
           ]
         }
@@ -934,6 +1061,26 @@
               "name": "Contains Duplicate",
               "diff": "Easy",
               "tag": "LC #217"
+            },
+            {
+              "name": "Two Sum",
+              "diff": "Easy",
+              "tag": "LC #1"
+            },
+            {
+              "name": "Group Anagrams",
+              "diff": "Medium",
+              "tag": "LC #49"
+            },
+            {
+              "name": "Longest Consecutive Sequence",
+              "diff": "Medium",
+              "tag": "LC #128"
+            },
+            {
+              "name": "Top K Frequent Elements",
+              "diff": "Medium",
+              "tag": "LC #347"
             }
           ]
         }
@@ -963,7 +1110,7 @@
             "space": "O(n)"
           },
           "code": "// Next Greater Element\nint[] nextGreater(int[] nums) {\n  int n = nums.length;\n  int[] res = new int[n];\n  Arrays.fill(res, -1);\n  Deque<Integer> stk = new ArrayDeque<>(); // indices\n  for (int i = 0; i < n; i++) {\n    while (!stk.isEmpty() && nums[stk.peek()] < nums[i])\n      res[stk.pop()] = nums[i];\n    stk.push(i);\n  }\n  return res;\n}",
-          "tip": "Push indices, not values \u2014 needed for range calculations. For circular array: iterate 2n with modulo.",
+          "tip": "Push indices, not values — needed for range calculations. For circular array: iterate 2n with modulo.",
           "questions": [
             {
               "name": "Next Greater Element I",
@@ -1013,6 +1160,21 @@
               "name": "Valid Parentheses",
               "diff": "Easy",
               "tag": "LC #20"
+            },
+            {
+              "name": "Min Stack",
+              "diff": "Medium",
+              "tag": "LC #155"
+            },
+            {
+              "name": "Evaluate Reverse Polish Notation",
+              "diff": "Medium",
+              "tag": "LC #150"
+            },
+            {
+              "name": "Decode String",
+              "diff": "Medium",
+              "tag": "LC #394"
             }
           ]
         },
@@ -1022,7 +1184,8 @@
           "approach": [
             "Enqueue (offer) at the tail.",
             "Dequeue (poll) from the head.",
-            "Useful for BFS (Level Order Traversals)."
+            "Useful for BFS (Level Order Traversals).",
+            "Monotonic Deque: maintain max/min in a sliding window in O(1) per step."
           ],
           "complexities": {
             "best": "O(1)",
@@ -1037,6 +1200,21 @@
               "name": "Number of Recent Calls",
               "diff": "Easy",
               "tag": "LC #933"
+            },
+            {
+              "name": "Sliding Window Maximum",
+              "diff": "Hard",
+              "tag": "LC #239"
+            },
+            {
+              "name": "Design Circular Queue",
+              "diff": "Medium",
+              "tag": "LC #622"
+            },
+            {
+              "name": "Binary Tree Level Order Traversal",
+              "diff": "Medium",
+              "tag": "LC #102"
             }
           ]
         }
@@ -1144,7 +1322,7 @@
           "name": "Dijkstra's Algorithm",
           "desc": "Single-source shortest path in weighted graph with non-negative edges. Uses a min-heap (priority queue).",
           "approach": [
-            "Initialize dist[] = \u221e, dist[src] = 0",
+            "Initialize dist[] = ∞, dist[src] = 0",
             "Add (0, src) to min-heap",
             "Pop min-cost node, skip if stale",
             "Relax all neighbors: if dist[u]+w < dist[v], update and push"
@@ -1156,7 +1334,7 @@
             "space": "O(V)"
           },
           "code": "int[] dijkstra(int src, List<int[]>[] adj, int n) {\n  int[] dist = new int[n];\n  Arrays.fill(dist, Integer.MAX_VALUE);\n  dist[src] = 0;\n  PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->a[0]-b[0]);\n  pq.offer(new int[]{0, src});\n  while (!pq.isEmpty()) {\n    int[] cur = pq.poll();\n    int d = cur[0], u = cur[1];\n    if (d > dist[u]) continue;\n    for (int[] e : adj[u])\n      if (dist[u]+e[1] < dist[e[0]]) {\n        dist[e[0]] = dist[u]+e[1];\n        pq.offer(new int[]{dist[e[0]], e[0]});\n      }\n  }\n  return dist;\n}",
-          "tip": "Fails on negative edges \u2014 use Bellman-Ford instead. The 'if d > dist[u] continue' check handles stale entries in lazy deletion.",
+          "tip": "Fails on negative edges — use Bellman-Ford instead. The 'if d > dist[u] continue' check handles stale entries in lazy deletion.",
           "questions": [
             {
               "name": "Network Delay Time",
@@ -1187,12 +1365,12 @@
             "Initialize parent[i] = i, rank[i] = 0",
             "Find with path compression: parent[x] = find(parent[x])",
             "Union by rank: attach smaller tree under larger",
-            "For cycle detection: if both nodes have same root \u2192 cycle"
+            "For cycle detection: if both nodes have same root → cycle"
           ],
           "complexities": {
-            "best": "O(\u03b1(n)) \u2248 O(1)",
-            "avg": "O(\u03b1(n))",
-            "worst": "O(\u03b1(n))",
+            "best": "O(α(n)) ≈ O(1)",
+            "avg": "O(α(n))",
+            "worst": "O(α(n))",
             "space": "O(n)"
           },
           "code": "class DSU {\n  int[] parent, rank;\n  DSU(int n) {\n    parent = new int[n]; rank = new int[n];\n    for (int i=0;i<n;i++) parent[i]=i;\n  }\n  int find(int x) {\n    if (parent[x]!=x) parent[x]=find(parent[x]);\n    return parent[x];\n  }\n  boolean union(int x, int y) {\n    int px=find(x), py=find(y);\n    if(px==py) return false;\n    if(rank[px]<rank[py]) parent[px]=py;\n    else if(rank[px]>rank[py]) parent[py]=px;\n    else { parent[py]=px; rank[px]++; }\n    return true;\n  }\n}",
@@ -1239,7 +1417,7 @@
             "space": "O(V + E)"
           },
           "code": "public void buildGraph(int[][] edges, int n) {\n  List<List<Integer>> graph = new ArrayList<>();\n  for (int i=0; i<n; i++) graph.add(new ArrayList<>());\n  for (int[] edge : edges) {\n    graph.get(edge[0]).add(edge[1]);\n    graph.get(edge[1]).add(edge[0]);\n  }\n}",
-          "tip": "Always default to adjacency lists instead of adjacency matrices to save space (except for dense graphs where E is close to V\u00b2).",
+          "tip": "Always default to adjacency lists instead of adjacency matrices to save space (except for dense graphs where E is close to V²).",
           "questions": []
         },
         {
@@ -1297,13 +1475,13 @@
             "Use a triple nested loop spanning intermediate node 'k', start computing path (i -> k) + (k -> j) < (i -> j)"
           ],
           "complexities": {
-            "best": "O(V\u00b3)",
-            "avg": "O(V\u00b3)",
-            "worst": "O(V\u00b3)",
-            "space": "O(V\u00b2)"
+            "best": "O(V³)",
+            "avg": "O(V³)",
+            "worst": "O(V³)",
+            "space": "O(V²)"
           },
           "code": "public void floydWarshall(int[][] dist, int n) {\n  for (int k = 0; k < n; k++) {\n    for (int i = 0; i < n; i++) {\n      for (int j = 0; j < n; j++) {\n        if (dist[i][k] != Integer.MAX_VALUE && dist[k][j] != Integer.MAX_VALUE) {\n          dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);\n        }\n      }\n    }\n  }\n}",
-          "tip": "Because it runs in O(V\u00b3), this algorithm guarantees test cases will have V <= 400. Be suspicious if n=100-300.",
+          "tip": "Because it runs in O(V³), this algorithm guarantees test cases will have V <= 400. Be suspicious if n=100-300.",
           "questions": [
             {
               "name": "Find the City With the Smallest Number of Neighbors at a Threshold Distance",
@@ -1346,7 +1524,7 @@
       "title": "Dynamic Programming",
       "algos": [
         {
-          "name": "1D DP \u2014 Linear",
+          "name": "1D DP — Linear",
           "desc": "Solves problems by building solution from subproblems stored in a 1D array. Classic: Fibonacci, climbing stairs, house robber.",
           "approach": [
             "Define dp[i]: answer for subproblem of size i",
@@ -1396,7 +1574,7 @@
           ]
         },
         {
-          "name": "2D DP \u2014 Grid / String",
+          "name": "2D DP — Grid / String",
           "desc": "dp[i][j] represents optimal solution using first i elements of one sequence and j of another. Used in LCS, LIS, edit distance, knapsack.",
           "approach": [
             "Define state: dp[i][j] = answer considering i rows, j cols",
@@ -1411,7 +1589,7 @@
             "space": "O(mn) or O(n)"
           },
           "code": "// Longest Common Subsequence\nint lcs(String s, String t) {\n  int m=s.length(), n=t.length();\n  int[][] dp = new int[m+1][n+1];\n  for (int i=1;i<=m;i++)\n    for (int j=1;j<=n;j++)\n      dp[i][j] = s.charAt(i-1)==t.charAt(j-1)\n        ? dp[i-1][j-1] + 1\n        : Math.max(dp[i-1][j], dp[i][j-1]);\n  return dp[m][n];\n}",
-          "tip": "LCS \u2192 edit distance \u2192 coin change \u2192 knapsack are all 2D DP family. Space optimize with 1D rolling array when only previous row matters.",
+          "tip": "LCS → edit distance → coin change → knapsack are all 2D DP family. Space optimize with 1D rolling array when only previous row matters.",
           "questions": [
             {
               "name": "Longest Common Subsequence",
@@ -1450,15 +1628,15 @@
           "desc": "Used when problem involves optimal answer over a subarray/interval [i,j]. State: dp[i][j]. Try all split points k in [i,j].",
           "approach": [
             "Fill by increasing interval length",
-            "For each (i, j), try all split points k: i \u2264 k < j",
+            "For each (i, j), try all split points k: i ≤ k < j",
             "dp[i][j] = optimal over all splits",
             "Base case: single elements dp[i][i]"
           ],
           "complexities": {
-            "best": "O(n\u00b3)",
-            "avg": "O(n\u00b3)",
-            "worst": "O(n\u00b3)",
-            "space": "O(n\u00b2)"
+            "best": "O(n³)",
+            "avg": "O(n³)",
+            "worst": "O(n³)",
+            "space": "O(n²)"
           },
           "code": "// Burst Balloons\nint maxCoins(int[] nums) {\n  int n = nums.length;\n  int[] b = new int[n+2];\n  b[0]=b[n+1]=1;\n  for(int i=0;i<n;i++) b[i+1]=nums[i];\n  int[][] dp=new int[n+2][n+2];\n  for(int len=1;len<=n;len++)\n    for(int l=1;l<=n-len+1;l++) {\n      int r=l+len-1;\n      for(int k=l;k<=r;k++)\n        dp[l][r]=Math.max(dp[l][r], b[l-1]*b[k]*b[r+1]+dp[l][k-1]+dp[k+1][r]);\n    }\n  return dp[1][n];\n}",
           "tip": "Key: always fill by length of interval, not by starting index. Think of the last balloon burst, not the first.",
@@ -1506,6 +1684,51 @@
               "name": "Find the Shortest Superstring",
               "diff": "Hard",
               "tag": "LC #943"
+            }
+          ]
+        },
+        {
+          "name": "DP on Trees",
+          "desc": "Compute DP states bottom-up on a tree. Each node's state depends on the results of its children. Used for diameter, max path sum, subtree sizes, and re-rooting problems.",
+          "approach": [
+            "DFS from root; recurse children first (post-order)",
+            "At each node, combine children results to compute node's own state",
+            "For diameter/max path: track both 'best through node' (global answer) and 'best ending at node' (returned to parent)",
+            "For re-rooting: two-pass DFS — down-pass computes subtree answers, up-pass propagates parent contribution"
+          ],
+          "complexities": {
+            "best": "O(n)",
+            "avg": "O(n)",
+            "worst": "O(n)",
+            "space": "O(h)"
+          },
+          "code": "// Binary Tree Maximum Path Sum\nint maxSum = Integer.MIN_VALUE;\nint dfs(TreeNode node) {\n  if (node == null) return 0;\n  int left  = Math.max(0, dfs(node.left));\n  int right = Math.max(0, dfs(node.right));\n  maxSum = Math.max(maxSum, left + right + node.val);\n  return Math.max(left, right) + node.val;\n}",
+          "tip": "Always distinguish the value returned to parent (single path) from the global answer updated at each node (path through node). These are two different things.",
+          "questions": [
+            {
+              "name": "Binary Tree Maximum Path Sum",
+              "diff": "Hard",
+              "tag": "LC #124"
+            },
+            {
+              "name": "Diameter of Binary Tree",
+              "diff": "Easy",
+              "tag": "LC #543"
+            },
+            {
+              "name": "House Robber III",
+              "diff": "Medium",
+              "tag": "LC #337"
+            },
+            {
+              "name": "Longest Univalue Path",
+              "diff": "Medium",
+              "tag": "LC #687"
+            },
+            {
+              "name": "Sum of Distances in Tree",
+              "diff": "Hard",
+              "tag": "LC #834"
             }
           ]
         }
@@ -1670,6 +1893,46 @@
               "name": "Majority Element",
               "diff": "Easy",
               "tag": "LC #169"
+            }
+          ]
+        },
+        {
+          "name": "Merge Sort Variations & Count Problems",
+          "desc": "Divide and conquer applied during the merge step to count or compute global properties — such as inversions, smaller numbers after self, or reverse pairs — in O(n log n).",
+          "approach": [
+            "Split array into two halves recursively",
+            "During the merge step, compare elements across left and right halves",
+            "Count pairs or accumulate results where the cross-half comparison satisfies the condition",
+            "Merge the halves in sorted order and return the count"
+          ],
+          "complexities": {
+            "best": "O(n log n)",
+            "avg": "O(n log n)",
+            "worst": "O(n log n)",
+            "space": "O(n)"
+          },
+          "code": "// Count Inversions (pairs where i < j but arr[i] > arr[j])\n long mergeCount(int[] arr, int l, int r) {\n  if (l >= r) return 0;\n  int mid = l + (r - l) / 2;\n  long count = mergeCount(arr, l, mid) + mergeCount(arr, mid+1, r);\n  int[] tmp = new int[r - l + 1];\n  int i = l, j = mid + 1, k = 0;\n  while (i <= mid && j <= r) {\n    if (arr[i] <= arr[j]) tmp[k++] = arr[i++];\n    else { count += (mid - i + 1); tmp[k++] = arr[j++]; }\n  }\n  while (i <= mid) tmp[k++] = arr[i++];\n  while (j <= r)   tmp[k++] = arr[j++];\n  System.arraycopy(tmp, 0, arr, l, tmp.length);\n  return count;\n}",
+          "tip": "When you see 'count pairs with condition across subarrays', think merge sort. The merge step sees all cross-half pairs in sorted order — perfect for counting.",
+          "questions": [
+            {
+              "name": "Count of Smaller Numbers After Self",
+              "diff": "Hard",
+              "tag": "LC #315"
+            },
+            {
+              "name": "Reverse Pairs",
+              "diff": "Hard",
+              "tag": "LC #493"
+            },
+            {
+              "name": "Count Inversions",
+              "diff": "Medium",
+              "tag": "GFG"
+            },
+            {
+              "name": "Sort an Array",
+              "diff": "Medium",
+              "tag": "LC #912"
             }
           ]
         }
