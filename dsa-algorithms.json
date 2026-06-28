@@ -1942,5 +1942,7 @@
         "dark": "#e0a060"
       }
     }
-  ]
+  ],
+  "title": "Algorithms",
+  "layout": "list"
 }

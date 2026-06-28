@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Learn App — Interactive study materials, algorithms, and reference guides." />
+  <title>Learn App</title>
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    /* Prevent flash of wrong theme on load */
+    (function () {
+      try {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) { }
+    })();
+  </script>
+</head>
+
+<body>
+
+  <!-- ===============================
+       LAYOUT: GRID (e.g. Data Structures)
+       =============================== -->
+  <div id="layout-grid" style="display: none;">
+    <header class="ds-header">
+      <a href="index.html" class="hero-logo" aria-label="Back to Home">/learn.ref</a>
+      <div class="ds-header-actions">
+        <button class="ds-theme-toggle btn-interactive theme-toggle-btn" type="button" aria-label="Toggle dark theme"
+          title="Toggle dark theme">
+          <span class="ds-icon-sun" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg></span>
+          <span class="ds-icon-moon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg></span>
+        </button>
+      </div>
+    </header>
+    <main class="ds-wrap">
+      <nav class="ds-tabs" id="ds-tabs" aria-label="Category filters"></nav>
+      <search>
+        <input class="ds-search-input" id="ds-search" type="search" placeholder="Search topics or problems..."
+          aria-label="Search topics" />
+      </search>
+      <section class="ds-grid" id="ds-grid" aria-label="Topic cards"></section>
+      <footer class="ds-footer">
+        Built by <a href="https://vinayprabhakar.dev" target="_blank" rel="noopener noreferrer">@vinayprabhakarx</a>
+      </footer>
+    </main>
+  </div>
+
+  <!-- ===============================
+       LAYOUT: LIST (e.g. Algorithms)
+       =============================== -->
+  <div id="layout-list" style="display: none;">
+    <div class="algo-page-wrapper" style="display: flex; min-height: 100vh;">
+      <!-- Sidebar Navigation -->
+      <nav id="algo-sidebar" class="algo-sidebar" aria-label="Topic navigation">
+        <div class="algo-sidebar-header">
+          <a href="index.html" class="hero-logo" aria-label="Back to Home">/learn.ref</a>
+        </div>
+        <search>
+          <input id="algo-search" type="search" class="algo-search" placeholder="Search topics or algorithms..."
+            aria-label="Search topics" />
+        </search>
+        <div id="algo-nav-tree" role="navigation" aria-label="Topics"></div>
+      </nav>
+
+      <!-- Main Content -->
+      <main id="algo-main" class="algo-main">
+        <header class="algo-topbar" id="algo-topbar">
+          <div class="algo-topbar-left">
+            <button class="algo-menu-btn" type="button" onclick="toggleSidebar()"
+              aria-label="Toggle sidebar menu">☰</button>
+            <span class="algo-breadcrumb"><span id="algo-subject-name">subject</span> / <strong id="algo-current-section">overview</strong></span>
+          </div>
+          <div class="algo-header-actions" style="gap: var(--space-3xl);">
+            <div class="algo-stats" id="algo-stats-container"></div>
+            <button class="algo-theme-toggle btn-interactive theme-toggle-btn" type="button" aria-label="Toggle theme">
+              <span class="algo-icon-sun" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg></span>
+              <span class="algo-icon-moon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg></span>
+            </button>
+          </div>
+        </header>
+
+        <div class="algo-content">
+          <!-- Topics injected by JS -->
+          <div id="algo-topics-container"></div>
+
+          <footer class="algo-footer">
+            Built by <a href="https://vinayprabhakar.dev" target="_blank" rel="noopener noreferrer">@vinayprabhakarx</a>
+          </footer>
+        </div>
+      </main>
+
+      <button id="algo-scrolltop" class="algo-scrolltop" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+        aria-label="Scroll to top">↑</button>
+    </div>
+  </div>
+
+  <!-- ===============================
+       TEMPLATES
+       =============================== -->
+
+  <!-- [GRID] Card template -->
+  <template id="ds-card-template">
+    <article class="ds-card" tabindex="0">
+      <header class="ds-card-head">
+        <span class="ds-badge"></span>
+        <h2 class="ds-card-title"></h2>
+        <span class="ds-chevron" aria-hidden="true">&#9658;</span>
+      </header>
+      <div class="ds-card-body">
+        <div class="ds-card-inner">
+          <p class="ds-desc"></p>
+          <h3 class="ds-section-label">Attributes</h3>
+          <dl class="ds-ops"></dl>
+          <h3 class="ds-section-label ds-section-uses-label">Common use cases</h3>
+          <ul class="ds-uses-grid"></ul>
+          <button class="ds-practice-btn btn-interactive" type="button">Explore further ↗</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <!-- [GRID] Operation item template -->
+  <template id="ds-op-template">
+    <div class="ds-op-item">
+      <dt class="ds-op-name"></dt>
+      <dd class="ds-op-tc"></dd>
+    </div>
+  </template>
+
+  <!-- [GRID] Use-case tag template -->
+  <template id="ds-use-template">
+    <li class="ds-use-tag" tabindex="0" role="button"></li>
+  </template>
+
+  <!-- [GRID] Empty state template -->
+  <template id="ds-empty-template">
+    <p class="ds-empty-msg"></p>
+  </template>
+
+  <!-- [LIST] Navigation Group -->
+  <template id="algo-nav-group-template">
+    <div class="algo-nav-group">
+      <h3 class="algo-nav-label"></h3>
+    </div>
+  </template>
+
+  <!-- [LIST] Navigation Item -->
+  <template id="algo-nav-item-template">
+    <a class="algo-nav-item" href="">
+      <span class="algo-nav-dot"></span><span class="nav-title"></span>
+    </a>
+  </template>
+
+  <!-- [LIST] Topic Header -->
+  <template id="algo-topic-template">
+    <section class="algo-topic">
+      <header class="algo-topic-head">
+        <span class="algo-topic-icon" aria-hidden="true"></span>
+        <h2 class="algo-topic-title"></h2>
+        <span class="algo-topic-count"></span>
+      </header>
+    </section>
+  </template>
+
+  <!-- [LIST] Card -->
+  <template id="algo-card-template">
+    <article class="algo-card">
+      <header class="algo-card-head btn-interactive" role="button" tabindex="0" aria-expanded="false">
+        <h3 class="algo-card-name"></h3>
+        <div class="algo-card-badges">
+          <span class="algo-card-badge algo-badge-sort algo-badge-time"></span>
+          <span class="algo-card-badge algo-badge-ds algo-badge-space"></span>
+        </div>
+        <span class="algo-chevron" aria-hidden="true">&#9658;</span>
+      </header>
+      <div class="algo-card-body">
+        <div class="algo-card-inner">
+          <h4 class="algo-section-label">Description</h4>
+          <p class="algo-desc"></p>
+
+          <h4 class="algo-section-label">Best Approach</h4>
+          <ol class="algo-steps"></ol>
+
+          <h4 class="algo-section-label">Attributes / Complexity</h4>
+          <table class="algo-complexity">
+            <thead>
+              <tr>
+                <th>Case</th>
+                <th>Time</th>
+                <th>Space</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Best</td>
+                <td class="algo-tc-best"></td>
+                <td class="algo-tc-space" rowspan="3"></td>
+              </tr>
+              <tr>
+                <td>Average</td>
+                <td class="algo-tc-avg"></td>
+              </tr>
+              <tr>
+                <td>Worst</td>
+                <td class="algo-tc-worst"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4 class="algo-section-label">Implementation</h4>
+          <div class="algo-code-wrapper">
+            <div class="algo-code-head">
+              <span class="algo-code-lang">Code</span>
+              <button class="algo-code-copy algo-btn-interactive" type="button" onclick="copyCode(this)">Copy</button>
+            </div>
+            <div class="algo-code-scroll">
+              <pre class="algo-code-block"></pre>
+            </div>
+          </div>
+
+          <h4 class="algo-section-label">Pro Tip</h4>
+          <p class="algo-tip"></p>
+
+          <h4 class="algo-section-label">Practice Problems (<span class="algo-prob-count"></span>)</h4>
+          <ul class="algo-questions"></ul>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <!-- [LIST] Question item -->
+  <template id="algo-question-template">
+    <li class="algo-question btn-interactive">
+      <span class="algo-diff"></span>
+      <span class="algo-qname"></span>
+      <span class="algo-tag"></span>
+    </li>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

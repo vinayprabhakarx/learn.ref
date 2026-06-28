@@ -1,0 +1,1574 @@
+{
+  "title": "Data Structures",
+  "layout": "grid",
+  "tabs": {
+    "all": "All",
+    "ds": "Data Structures",
+    "sorting": "Sorting",
+    "searching": "Searching",
+    "graph": "Graph",
+    "tree": "Tree",
+    "dp": "Dynamic Programming",
+    "other": "Other"
+  },
+  "items": [
+    {
+      "id": "array",
+      "cat": "ds",
+      "title": "Array",
+      "badge": "badge-ds",
+      "label": "Data Structure",
+      "desc": "Contiguous block of memory storing elements of the same type. Index-based O(1) access.",
+      "ops": [
+        [
+          "Access",
+          "O(1)"
+        ],
+        [
+          "Search",
+          "O(n)"
+        ],
+        [
+          "Insert (end)",
+          "O(1)"
+        ],
+        [
+          "Insert (mid)",
+          "O(n)"
+        ],
+        [
+          "Delete",
+          "O(n)"
+        ]
+      ],
+      "uses": [
+        "Prefix sums — range sum queries",
+        "Sliding window — max/min subarray",
+        "Two pointers — pair sums",
+        "Kadane's — max subarray sum",
+        "Merge intervals",
+        "Product of array except self",
+        "Rotate array",
+        "Find duplicate number",
+        "Trapping rain water",
+        "Next permutation"
+      ]
+    },
+    {
+      "id": "linkedlist",
+      "cat": "ds",
+      "title": "Linked List",
+      "badge": "badge-ds",
+      "label": "Data Structure",
+      "desc": "Nodes connected via pointers. Singly (next), Doubly (next + prev), Circular variants.",
+      "ops": [
+        [
+          "Access",
+          "O(n)"
+        ],
+        [
+          "Search",
+          "O(n)"
+        ],
+        [
+          "Insert (head)",
+          "O(1)"
+        ],
+        [
+          "Insert (tail)",
+          "O(1)*"
+        ],
+        [
+          "Delete",
+          "O(1)*"
+        ]
+      ],
+      "uses": [
+        "Reverse a linked list",
+        "Detect cycle (Floyd's)",
+        "Find middle node",
+        "Merge two sorted lists",
+        "Remove Nth node from end",
+        "Flatten multilevel list",
+        "LRU cache implementation",
+        "Palindrome linked list",
+        "Copy list with random pointer",
+        "Add two numbers as lists"
+      ]
+    },
+    {
+      "id": "stack",
+      "cat": "ds",
+      "title": "Stack",
+      "badge": "badge-ds",
+      "label": "Data Structure",
+      "desc": "LIFO (Last In First Out). Implemented via array or linked list.",
+      "ops": [
+        [
+          "Push",
+          "O(1)"
+        ],
+        [
+          "Pop",
+          "O(1)"
+        ],
+        [
+          "Peek",
+          "O(1)"
+        ],
+        [
+          "Search",
+          "O(n)"
+        ],
+        [
+          "isEmpty",
+          "O(1)"
+        ]
+      ],
+      "uses": [
+        "Valid parentheses",
+        "Daily temperatures (monotonic stack)",
+        "Largest rectangle in histogram",
+        "Next greater element",
+        "Min stack with O(1) getMin",
+        "Evaluate reverse polish notation",
+        "Decode string (nested)",
+        "Car fleet problem",
+        "Asteroid collision",
+        "Basic calculator"
+      ]
+    },
+    {
+      "id": "queue",
+      "cat": "ds",
+      "title": "Queue / Deque",
+      "badge": "badge-ds",
+      "label": "Data Structure",
+      "desc": "FIFO (First In First Out). Deque allows insert/delete from both ends.",
+      "ops": [
+        [
+          "Enqueue",
+          "O(1)"
+        ],
+        [
+          "Dequeue",
+          "O(1)"
+        ],
+        [
+          "Peek",
+          "O(1)"
+        ],
+        [
+          "Search",
+          "O(n)"
+        ],
+        [
+          "Size",
+          "O(1)"
+        ]
+      ],
+      "uses": [
+        "Sliding window maximum (deque)",
+        "BFS shortest path in grid",
+        "Rotten oranges (multi-source BFS)",
+        "01 Matrix — distance to nearest 0",
+        "Design circular queue",
+        "First non-repeating character",
+        "Task scheduler",
+        "Implement queue using stacks",
+        "Snake and ladder game",
+        "Jump game III"
+      ]
+    },
+    {
+      "id": "hashmap",
+      "cat": "ds",
+      "title": "HashMap / HashSet",
+      "badge": "badge-ds",
+      "label": "Data Structure",
+      "desc": "Key-value store using hash function for O(1) avg operations. Handles collisions via chaining or open addressing.",
+      "ops": [
+        [
+          "Insert",
+          "O(1) avg"
+        ],
+        [
+          "Delete",
+          "O(1) avg"
+        ],
+        [
+          "Lookup",
+          "O(1) avg"
+        ],
+        [
+          "Worst case",
+          "O(n)"
+        ],
+        [
+          "Space",
+          "O(n)"
+        ]
+      ],
+      "uses": [
+        "Two Sum",
+        "Group anagrams",
+        "Longest consecutive sequence",
+        "Subarray sum equals K",
+        "Top K frequent elements",
+        "Isomorphic strings",
+        "Word pattern",
+        "LRU cache",
+        "Longest substring without repeating",
+        "Four sum count"
+      ]
+    },
+    {
+      "id": "heap",
+      "cat": "ds",
+      "title": "Heap (Priority Queue)",
+      "badge": "badge-ds",
+      "label": "Data Structure",
+      "desc": "Complete binary tree. Min-Heap: parent ≤ children. Max-Heap: parent ≥ children. Stored as array.",
+      "ops": [
+        [
+          "Insert",
+          "O(log n)"
+        ],
+        [
+          "Delete min/max",
+          "O(log n)"
+        ],
+        [
+          "Peek min/max",
+          "O(1)"
+        ],
+        [
+          "Heapify",
+          "O(n)"
+        ],
+        [
+          "Search",
+          "O(n)"
+        ]
+      ],
+      "uses": [
+        "Kth largest element in array",
+        "Find median from data stream",
+        "Top K frequent words",
+        "Merge K sorted lists",
+        "K closest points to origin",
+        "Task scheduler",
+        "Reorganize string",
+        "Smallest range covering K lists",
+        "IPO (maximize capital)",
+        "Single-threaded CPU scheduling"
+      ]
+    },
+    {
+      "id": "bst",
+      "cat": "ds",
+      "title": "Binary Search Tree",
+      "badge": "badge-ds",
+      "label": "Data Structure",
+      "desc": "Left < Root < Right. Balanced BST (AVL, Red-Black) gives O(log n) ops.",
+      "ops": [
+        [
+          "Search",
+          "O(log n)"
+        ],
+        [
+          "Insert",
+          "O(log n)"
+        ],
+        [
+          "Delete",
+          "O(log n)"
+        ],
+        [
+          "Inorder",
+          "O(n)"
+        ],
+        [
+          "Worst case",
+          "O(n)"
+        ]
+      ],
+      "uses": [
+        "Validate BST",
+        "Lowest common ancestor in BST",
+        "Kth smallest in BST",
+        "Convert sorted array to BST",
+        "BST iterator",
+        "Delete node in BST",
+        "Trim a BST",
+        "Recover BST (two swapped nodes)",
+        "Range sum of BST",
+        "Insert into BST"
+      ]
+    },
+    {
+      "id": "trie",
+      "cat": "ds",
+      "title": "Trie (Prefix Tree)",
+      "badge": "badge-ds",
+      "label": "Data Structure",
+      "desc": "Tree where each node = a character. Root to leaf = word. Used for prefix-based lookups.",
+      "ops": [
+        [
+          "Insert",
+          "O(L)"
+        ],
+        [
+          "Search",
+          "O(L)"
+        ],
+        [
+          "StartsWith",
+          "O(L)"
+        ],
+        [
+          "Delete",
+          "O(L)"
+        ],
+        [
+          "Space",
+          "O(ALPHABET × L × N)"
+        ]
+      ],
+      "uses": [
+        "Implement trie (insert/search/prefix)",
+        "Word search II (Trie + DFS)",
+        "Replace words with root",
+        "Design search autocomplete",
+        "Map sum pairs",
+        "Longest word in dictionary",
+        "Maximum XOR of two numbers",
+        "Word break using trie",
+        "Stream of characters",
+        "Index pairs of a string"
+      ]
+    },
+    {
+      "id": "graph",
+      "cat": "ds",
+      "title": "Graph",
+      "badge": "badge-graph",
+      "label": "Data Structure",
+      "desc": "Vertices + Edges. Directed/Undirected. Weighted/Unweighted. Represented as Adjacency List or Matrix.",
+      "ops": [
+        [
+          "Adj List space",
+          "O(V+E)"
+        ],
+        [
+          "Adj Matrix space",
+          "O(V²)"
+        ],
+        [
+          "Add edge",
+          "O(1)"
+        ],
+        [
+          "Find edge (list)",
+          "O(degree)"
+        ],
+        [
+          "Find edge (matrix)",
+          "O(1)"
+        ]
+      ],
+      "uses": [
+        "Number of islands (DFS/BFS)",
+        "Clone graph",
+        "Course schedule (cycle detect)",
+        "Pacific Atlantic water flow",
+        "Surrounded regions (flood fill)",
+        "Graph valid tree",
+        "Number of connected components",
+        "Accounts merge",
+        "Minimum height trees",
+        "Reconstruct itinerary"
+      ]
+    },
+    {
+      "id": "segment",
+      "cat": "ds",
+      "title": "Segment Tree",
+      "badge": "badge-ds",
+      "label": "Data Structure",
+      "desc": "Tree for range queries (sum, min, max) and point updates on an array.",
+      "ops": [
+        [
+          "Build",
+          "O(n)"
+        ],
+        [
+          "Range Query",
+          "O(log n)"
+        ],
+        [
+          "Point Update",
+          "O(log n)"
+        ],
+        [
+          "Space",
+          "O(4n)"
+        ],
+        [
+          "Lazy Propagation",
+          "O(log n)"
+        ]
+      ],
+      "uses": [
+        "Range sum query — mutable",
+        "Count of smaller numbers after self",
+        "Queue reconstruction by height",
+        "The skyline problem",
+        "Range minimum query",
+        "Count of range sum",
+        "Falling squares",
+        "Maximum sum of rectangle",
+        "My calendar I/II/III",
+        "Interval list intersections"
+      ]
+    },
+    {
+      "id": "bubble",
+      "cat": "sorting",
+      "title": "Bubble Sort",
+      "badge": "badge-sort",
+      "label": "Sorting",
+      "desc": "Repeatedly swaps adjacent elements if out of order. Stable sort.",
+      "ops": [
+        [
+          "Best",
+          "O(n)"
+        ],
+        [
+          "Average",
+          "O(n²)"
+        ],
+        [
+          "Worst",
+          "O(n²)"
+        ],
+        [
+          "Space",
+          "O(1)"
+        ],
+        [
+          "Stable",
+          "Yes"
+        ]
+      ],
+      "uses": [
+        "Educational / interview explanation",
+        "Nearly sorted small arrays",
+        "Detect if array is sorted",
+        "Counting passes as a metric",
+        "Visualizing sort steps"
+      ]
+    },
+    {
+      "id": "selection",
+      "cat": "sorting",
+      "title": "Selection Sort",
+      "badge": "badge-sort",
+      "label": "Sorting",
+      "desc": "Finds minimum element and places it at the beginning repeatedly.",
+      "ops": [
+        [
+          "Best",
+          "O(n²)"
+        ],
+        [
+          "Average",
+          "O(n²)"
+        ],
+        [
+          "Worst",
+          "O(n²)"
+        ],
+        [
+          "Space",
+          "O(1)"
+        ],
+        [
+          "Stable",
+          "No"
+        ]
+      ],
+      "uses": [
+        "Minimum number of swaps to sort",
+        "Minimize write operations",
+        "Selection in embedded systems",
+        "Educational demonstrations",
+        "Finding K minimums iteratively"
+      ]
+    },
+    {
+      "id": "insertion",
+      "cat": "sorting",
+      "title": "Insertion Sort",
+      "badge": "badge-sort",
+      "label": "Sorting",
+      "desc": "Builds sorted array one item at a time. Efficient for small/nearly-sorted data.",
+      "ops": [
+        [
+          "Best",
+          "O(n)"
+        ],
+        [
+          "Average",
+          "O(n²)"
+        ],
+        [
+          "Worst",
+          "O(n²)"
+        ],
+        [
+          "Space",
+          "O(1)"
+        ],
+        [
+          "Stable",
+          "Yes"
+        ]
+      ],
+      "uses": [
+        "Insert interval into sorted list",
+        "Online sort (stream of elements)",
+        "Sort nearly sorted array",
+        "Subarrays within Timsort/IntroSort",
+        "Insertion sort list (linked list)"
+      ]
+    },
+    {
+      "id": "merge",
+      "cat": "sorting",
+      "title": "Merge Sort",
+      "badge": "badge-sort",
+      "label": "Sorting",
+      "desc": "Divide array into halves, sort each, merge. Classic divide and conquer. Stable.",
+      "ops": [
+        [
+          "Best",
+          "O(n log n)"
+        ],
+        [
+          "Average",
+          "O(n log n)"
+        ],
+        [
+          "Worst",
+          "O(n log n)"
+        ],
+        [
+          "Space",
+          "O(n)"
+        ],
+        [
+          "Stable",
+          "Yes"
+        ]
+      ],
+      "uses": [
+        "Count inversions in array",
+        "Sort linked list",
+        "Merge K sorted arrays",
+        "External sorting of large files",
+        "Sort colors (Dutch flag variant)",
+        "Count of range sum",
+        "Reverse pairs",
+        "Stable sort requirement"
+      ]
+    },
+    {
+      "id": "quick",
+      "cat": "sorting",
+      "title": "Quick Sort",
+      "badge": "badge-sort",
+      "label": "Sorting",
+      "desc": "Pick pivot, partition array, recursively sort subarrays. In-place. Not stable.",
+      "ops": [
+        [
+          "Best",
+          "O(n log n)"
+        ],
+        [
+          "Average",
+          "O(n log n)"
+        ],
+        [
+          "Worst",
+          "O(n²)"
+        ],
+        [
+          "Space",
+          "O(log n)"
+        ],
+        [
+          "Stable",
+          "No"
+        ]
+      ],
+      "uses": [
+        "Kth largest element (QuickSelect)",
+        "Sort array of 0s 1s 2s (3-way)",
+        "Wiggle sort",
+        "Partition array by condition",
+        "Find the duplicate number",
+        "Majority element",
+        "Top K frequent elements",
+        "Sort characters by frequency"
+      ]
+    },
+    {
+      "id": "heap-sort",
+      "cat": "sorting",
+      "title": "Heap Sort",
+      "badge": "badge-sort",
+      "label": "Sorting",
+      "desc": "Build max-heap, extract max n times. In-place, not stable.",
+      "ops": [
+        [
+          "Best",
+          "O(n log n)"
+        ],
+        [
+          "Average",
+          "O(n log n)"
+        ],
+        [
+          "Worst",
+          "O(n log n)"
+        ],
+        [
+          "Space",
+          "O(1)"
+        ],
+        [
+          "Stable",
+          "No"
+        ]
+      ],
+      "uses": [
+        "Sort array in-place O(n log n)",
+        "K largest elements",
+        "Nearly sorted array (heap)",
+        "Sort a K-sorted array",
+        "Priority-based scheduling"
+      ]
+    },
+    {
+      "id": "counting",
+      "cat": "sorting",
+      "title": "Counting / Radix / Bucket",
+      "badge": "badge-sort",
+      "label": "Sorting",
+      "desc": "Non-comparison sorts. Counting: small integers. Radix: digit-by-digit. Bucket: uniform distribution.",
+      "ops": [
+        [
+          "Counting",
+          "O(n+k)"
+        ],
+        [
+          "Radix",
+          "O(d(n+k))"
+        ],
+        [
+          "Bucket",
+          "O(n+k)"
+        ],
+        [
+          "Space",
+          "O(n+k)"
+        ],
+        [
+          "Stable",
+          "Yes (all)"
+        ]
+      ],
+      "uses": [
+        "Sort integers in small range",
+        "Maximum gap (bucket sort)",
+        "Sort colors 0/1/2",
+        "Sort strings lexicographically",
+        "Sort floats in [0,1]",
+        "Frequency sort",
+        "Sort array by parity",
+        "Top K frequent after counting"
+      ]
+    },
+    {
+      "id": "linear",
+      "cat": "searching",
+      "title": "Linear Search",
+      "badge": "badge-sort",
+      "label": "Searching",
+      "desc": "Scan every element one by one. Works on unsorted data.",
+      "ops": [
+        [
+          "Best",
+          "O(1)"
+        ],
+        [
+          "Average",
+          "O(n)"
+        ],
+        [
+          "Worst",
+          "O(n)"
+        ],
+        [
+          "Space",
+          "O(1)"
+        ],
+        [
+          "Sorted required",
+          "No"
+        ]
+      ],
+      "uses": [
+        "Find in unsorted array",
+        "Search in linked list",
+        "Find first/last occurrence",
+        "Find peak element (linear)",
+        "Linear scan for majority element (Boyer-Moore)",
+        "Search in rotated linked list"
+      ]
+    },
+    {
+      "id": "binary",
+      "cat": "searching",
+      "title": "Binary Search",
+      "badge": "badge-sort",
+      "label": "Searching",
+      "desc": "Divide sorted range in half each step. Master template: lo, hi, mid = lo+(hi-lo)/2.",
+      "ops": [
+        [
+          "Best",
+          "O(1)"
+        ],
+        [
+          "Average",
+          "O(log n)"
+        ],
+        [
+          "Worst",
+          "O(log n)"
+        ],
+        [
+          "Space",
+          "O(1)"
+        ],
+        [
+          "Sorted required",
+          "Yes"
+        ]
+      ],
+      "uses": [
+        "Search in rotated sorted array",
+        "Find minimum in rotated array",
+        "Koko eating bananas (answer space)",
+        "Capacity to ship packages",
+        "Find peak element",
+        "Search 2D matrix",
+        "Median of two sorted arrays",
+        "Find first and last position",
+        "Sqrt(x) via binary search",
+        "Guess number higher or lower"
+      ]
+    },
+    {
+      "id": "bfs",
+      "cat": "graph",
+      "title": "BFS (Breadth-First Search)",
+      "badge": "badge-graph",
+      "label": "Graph",
+      "desc": "Level-by-level traversal using a queue. Finds shortest path in unweighted graph.",
+      "ops": [
+        [
+          "Time",
+          "O(V+E)"
+        ],
+        [
+          "Space",
+          "O(V)"
+        ],
+        [
+          "Shortest path",
+          "Yes (unweighted)"
+        ],
+        [
+          "Optimal",
+          "Yes"
+        ],
+        [
+          "Complete",
+          "Yes"
+        ]
+      ],
+      "uses": [
+        "Word ladder (shortest transformation)",
+        "Rotting oranges (multi-source BFS)",
+        "Shortest path in binary matrix",
+        "Minimum knight moves",
+        "Open the lock",
+        "Walls and gates",
+        "Jump game III",
+        "01 matrix — distance to nearest 0",
+        "Bipartite graph check (2-coloring)",
+        "Minimum genetic mutation"
+      ]
+    },
+    {
+      "id": "dfs",
+      "cat": "graph",
+      "title": "DFS (Depth-First Search)",
+      "badge": "badge-graph",
+      "label": "Graph",
+      "desc": "Explore as deep as possible before backtracking. Uses stack (recursion or explicit).",
+      "ops": [
+        [
+          "Time",
+          "O(V+E)"
+        ],
+        [
+          "Space",
+          "O(V)"
+        ],
+        [
+          "Shortest path",
+          "No"
+        ],
+        [
+          "Optimal",
+          "No"
+        ],
+        [
+          "Complete",
+          "Yes (finite)"
+        ]
+      ],
+      "uses": [
+        "Number of islands",
+        "Max area of island",
+        "Surrounded regions (flood fill)",
+        "Course schedule (cycle in DAG)",
+        "Pacific Atlantic water flow",
+        "Longest increasing path in matrix",
+        "Find eventual safe states",
+        "Redundant connection",
+        "Critical connections in network",
+        "Reconstruct itinerary (Euler path)"
+      ]
+    },
+    {
+      "id": "dijkstra",
+      "cat": "graph",
+      "title": "Dijkstra's Algorithm",
+      "badge": "badge-graph",
+      "label": "Graph",
+      "desc": "Greedy shortest path for non-negative weighted graphs. Uses min-heap.",
+      "ops": [
+        [
+          "Time (heap)",
+          "O((V+E)log V)"
+        ],
+        [
+          "Time (matrix)",
+          "O(V²)"
+        ],
+        [
+          "Space",
+          "O(V)"
+        ],
+        [
+          "Negative edges",
+          "No"
+        ],
+        [
+          "SSSP",
+          "Yes"
+        ]
+      ],
+      "uses": [
+        "Network delay time",
+        "Path with minimum effort",
+        "Cheapest flights within K stops (modified)",
+        "Find city with smallest neighbors",
+        "Minimum cost to reach destination",
+        "Path with maximum probability",
+        "Swim in rising water",
+        "Minimum weighted path",
+        "Design GPS routing",
+        "Reachable nodes in subdivided graph"
+      ]
+    },
+    {
+      "id": "bellman",
+      "cat": "graph",
+      "title": "Bellman-Ford",
+      "badge": "badge-graph",
+      "label": "Graph",
+      "desc": "Relaxes all edges V-1 times. Handles negative weights. Detects negative cycles.",
+      "ops": [
+        [
+          "Time",
+          "O(VE)"
+        ],
+        [
+          "Space",
+          "O(V)"
+        ],
+        [
+          "Negative edges",
+          "Yes"
+        ],
+        [
+          "Negative cycles",
+          "Detects"
+        ],
+        [
+          "SSSP",
+          "Yes"
+        ]
+      ],
+      "uses": [
+        "Cheapest flights within K stops",
+        "Currency arbitrage (negative cycles)",
+        "Shortest path with negative weights",
+        "Detect negative cycle in forex",
+        "Bellman-Ford on DAG",
+        "Distance constraint problems",
+        "Shortest path in a grid with obstacles"
+      ]
+    },
+    {
+      "id": "floyd",
+      "cat": "graph",
+      "title": "Floyd-Warshall",
+      "badge": "badge-graph",
+      "label": "Graph",
+      "desc": "All-pairs shortest path using DP. dp[i][j] = min cost from i to j.",
+      "ops": [
+        [
+          "Time",
+          "O(V³)"
+        ],
+        [
+          "Space",
+          "O(V²)"
+        ],
+        [
+          "Negative edges",
+          "Yes"
+        ],
+        [
+          "Negative cycles",
+          "Detects"
+        ],
+        [
+          "APSP",
+          "Yes"
+        ]
+      ],
+      "uses": [
+        "Find the city with smallest neighbor count",
+        "Transitive closure of a graph",
+        "Detect negative cycles",
+        "All-pairs reachability",
+        "Minimum cost between all pairs",
+        "Floyd on small graphs (V ≤ 400)",
+        "Shortest path in weighted small graph"
+      ]
+    },
+    {
+      "id": "topo",
+      "cat": "graph",
+      "title": "Topological Sort",
+      "badge": "badge-graph",
+      "label": "Graph",
+      "desc": "Linear ordering of vertices in a DAG. DFS postorder or Kahn's (BFS + indegree).",
+      "ops": [
+        [
+          "Time",
+          "O(V+E)"
+        ],
+        [
+          "Space",
+          "O(V)"
+        ],
+        [
+          "DAG only",
+          "Yes"
+        ],
+        [
+          "Cycle detect",
+          "Yes (Kahn's)"
+        ],
+        [
+          "Unique order",
+          "Not always"
+        ]
+      ],
+      "uses": [
+        "Course schedule I & II",
+        "Alien dictionary (order of chars)",
+        "Minimum height trees",
+        "Sequence reconstruction",
+        "Build order / dependency resolution",
+        "Parallel courses",
+        "Sort items by group dependencies",
+        "Find order of tasks",
+        "Largest color value in directed graph",
+        "Longest path in DAG"
+      ]
+    },
+    {
+      "id": "union",
+      "cat": "graph",
+      "title": "Union-Find (DSU)",
+      "badge": "badge-graph",
+      "label": "Graph",
+      "desc": "Disjoint Set Union. Union by rank + path compression gives near-O(1) amortized.",
+      "ops": [
+        [
+          "Find",
+          "O(α(n))"
+        ],
+        [
+          "Union",
+          "O(α(n))"
+        ],
+        [
+          "Space",
+          "O(n)"
+        ],
+        [
+          "Cycle detect",
+          "Yes"
+        ],
+        [
+          "α(n)",
+          "Inverse Ackermann"
+        ]
+      ],
+      "uses": [
+        "Number of connected components",
+        "Redundant connection",
+        "Accounts merge",
+        "Satisfiability of equality equations",
+        "Smallest string with swaps",
+        "Number of operations to make network connected",
+        "Regions cut by slashes",
+        "Sentence similarity II",
+        "Making a large island",
+        "Swim in rising water"
+      ]
+    },
+    {
+      "id": "kruskal",
+      "cat": "graph",
+      "title": "Kruskal's / Prim's MST",
+      "badge": "badge-graph",
+      "label": "Graph",
+      "desc": "Kruskal: sort edges, add if no cycle (uses DSU). Prim: greedy grow using min-heap.",
+      "ops": [
+        [
+          "Kruskal",
+          "O(E log E)"
+        ],
+        [
+          "Prim (heap)",
+          "O((V+E)log V)"
+        ],
+        [
+          "Space",
+          "O(V)"
+        ],
+        [
+          "Sparse",
+          "Kruskal"
+        ],
+        [
+          "Dense",
+          "Prim"
+        ]
+      ],
+      "uses": [
+        "Min cost to connect all points",
+        "Network connection cost",
+        "Optimize water distribution",
+        "Min spanning tree in weighted graph",
+        "Clustering by distance",
+        "Critical connections",
+        "Remove max edges to keep graph traversable",
+        "Find MST weight"
+      ]
+    },
+    {
+      "id": "inorder",
+      "cat": "tree",
+      "title": "Tree Traversals",
+      "badge": "badge-tree",
+      "label": "Tree",
+      "desc": "Inorder (L-Root-R) = sorted BST. Preorder (Root-L-R) = copy tree. Postorder (L-R-Root) = delete/evaluate. Level order = BFS.",
+      "ops": [
+        [
+          "All traversals",
+          "O(n)"
+        ],
+        [
+          "Space (recursive)",
+          "O(h)"
+        ],
+        [
+          "Space (iterative)",
+          "O(n)"
+        ],
+        [
+          "Morris traversal",
+          "O(1) space"
+        ],
+        [
+          "Height h",
+          "O(log n) balanced"
+        ]
+      ],
+      "uses": [
+        "Binary tree inorder traversal",
+        "Zigzag level order traversal",
+        "Vertical order traversal",
+        "Binary tree right side view",
+        "Average of levels",
+        "Maximum depth of binary tree",
+        "Symmetric tree check",
+        "Path sum I & II",
+        "Serialize and deserialize binary tree",
+        "Flatten binary tree to linked list"
+      ]
+    },
+    {
+      "id": "lca",
+      "cat": "tree",
+      "title": "LCA & Tree DP",
+      "badge": "badge-tree",
+      "label": "Tree",
+      "desc": "Lowest Common Ancestor: naive O(n), Binary Lifting O(log n), Euler tour + RMQ O(1) query.",
+      "ops": [
+        [
+          "Naive LCA",
+          "O(n)"
+        ],
+        [
+          "Binary Lifting",
+          "O(n log n)/O(log n)"
+        ],
+        [
+          "Euler+RMQ",
+          "O(n)/O(1)"
+        ],
+        [
+          "Tree DP",
+          "O(n)"
+        ],
+        [
+          "Rerooting",
+          "O(n)"
+        ]
+      ],
+      "uses": [
+        "LCA of binary tree",
+        "LCA of BST",
+        "Diameter of binary tree (Tree DP)",
+        "Binary tree maximum path sum",
+        "Distribute coins in binary tree",
+        "House robber III (tree DP)",
+        "Longest univalue path",
+        "Sum of distances in tree (rerooting)",
+        "Count good nodes in binary tree",
+        "Time needed to inform all employees"
+      ]
+    },
+    {
+      "id": "dp-1d",
+      "cat": "dp",
+      "title": "1D Dynamic Programming",
+      "badge": "badge-dp",
+      "label": "DP",
+      "desc": "State = index. Optimal substructure + overlapping subproblems. Top-down (memo) or bottom-up (tabulation).",
+      "ops": [
+        [
+          "Fibonacci",
+          "O(n)"
+        ],
+        [
+          "Climbing Stairs",
+          "O(n)"
+        ],
+        [
+          "House Robber",
+          "O(n)"
+        ],
+        [
+          "Coin Change",
+          "O(n×k)"
+        ],
+        [
+          "Space opt.",
+          "O(1) or O(n)"
+        ]
+      ],
+      "uses": [
+        "Climbing stairs",
+        "House robber I & II",
+        "Coin change (min coins)",
+        "Coin change II (number of ways)",
+        "Decode ways",
+        "Word break",
+        "Jump game I & II",
+        "Maximum product subarray",
+        "Longest increasing subsequence (LIS)",
+        "Partition equal subset sum"
+      ]
+    },
+    {
+      "id": "dp-2d",
+      "cat": "dp",
+      "title": "2D / Grid DP",
+      "badge": "badge-dp",
+      "label": "DP",
+      "desc": "State = (i, j). dp[i][j] depends on neighbors. Common in string and grid problems.",
+      "ops": [
+        [
+          "LCS",
+          "O(mn)"
+        ],
+        [
+          "Edit Distance",
+          "O(mn)"
+        ],
+        [
+          "0-1 Knapsack",
+          "O(nW)"
+        ],
+        [
+          "Grid paths",
+          "O(mn)"
+        ],
+        [
+          "Space",
+          "O(mn)→O(n)"
+        ]
+      ],
+      "uses": [
+        "Longest common subsequence",
+        "Edit distance (min operations)",
+        "Unique paths I & II",
+        "Minimum path sum in grid",
+        "0-1 Knapsack",
+        "Interleaving string",
+        "Regular expression matching",
+        "Wildcard matching",
+        "Maximal square of 1s",
+        "Distinct subsequences"
+      ]
+    },
+    {
+      "id": "dp-interval",
+      "cat": "dp",
+      "title": "Interval / Partition DP",
+      "badge": "badge-dp",
+      "label": "DP",
+      "desc": "State = (l, r) subarray range. Try all split points k in [l, r).",
+      "ops": [
+        [
+          "Matrix Chain",
+          "O(n³)"
+        ],
+        [
+          "Burst Balloons",
+          "O(n³)"
+        ],
+        [
+          "Palindrome Part.",
+          "O(n²)"
+        ],
+        [
+          "Space",
+          "O(n²)"
+        ],
+        [
+          "State space",
+          "O(n²)"
+        ]
+      ],
+      "uses": [
+        "Burst balloons",
+        "Palindrome partitioning II (min cuts)",
+        "Strange printer",
+        "Remove boxes",
+        "Minimum cost to merge stones",
+        "Zuma game",
+        "Predict the winner",
+        "Optimal strategy for a game",
+        "Matrix chain multiplication",
+        "Stone game variants"
+      ]
+    },
+    {
+      "id": "dp-bitmask",
+      "cat": "dp",
+      "title": "Bitmask DP",
+      "badge": "badge-dp",
+      "label": "DP",
+      "desc": "State includes bitmask representing a subset. Used when n ≤ 20. dp[mask][i].",
+      "ops": [
+        [
+          "TSP",
+          "O(2ⁿ×n²)"
+        ],
+        [
+          "States",
+          "O(2ⁿ×n)"
+        ],
+        [
+          "Space",
+          "O(2ⁿ×n)"
+        ],
+        [
+          "n limit",
+          "≤ 20–25"
+        ],
+        [
+          "Transition",
+          "O(n)"
+        ]
+      ],
+      "uses": [
+        "Shortest path visiting all nodes (TSP-like)",
+        "Stickers to spell word",
+        "Minimum incompatibility",
+        "Parallel courses II",
+        "Distribute repeating integers",
+        "Maximum students taking exam",
+        "Minimum XOR sum",
+        "Count ways to build rooms",
+        "Maximize score after N operations",
+        "Find minimum time to finish all jobs"
+      ]
+    },
+    {
+      "id": "two-pointer",
+      "cat": "other",
+      "title": "Two Pointers",
+      "badge": "badge-ds",
+      "label": "Technique",
+      "desc": "Left and right pointers moving toward each other or in same direction. Reduces O(n²) → O(n).",
+      "ops": [
+        [
+          "Time",
+          "O(n)"
+        ],
+        [
+          "Space",
+          "O(1)"
+        ],
+        [
+          "Sorted required",
+          "Often yes"
+        ],
+        [
+          "Variants",
+          "Opposite / same dir / slow-fast"
+        ],
+        [
+          "Pattern",
+          "Shrink window"
+        ]
+      ],
+      "uses": [
+        "Two Sum II (sorted)",
+        "3Sum / 4Sum",
+        "Container with most water",
+        "Remove duplicates from sorted array",
+        "Trapping rain water",
+        "Move zeroes",
+        "Squares of sorted array",
+        "Minimum size subarray sum",
+        "Palindrome check (two ends)",
+        "Linked list cycle detection (fast/slow)"
+      ]
+    },
+    {
+      "id": "sliding",
+      "cat": "other",
+      "title": "Sliding Window",
+      "badge": "badge-ds",
+      "label": "Technique",
+      "desc": "Maintain a window [l, r] and expand/shrink based on condition. Fixed or variable size.",
+      "ops": [
+        [
+          "Time",
+          "O(n)"
+        ],
+        [
+          "Space",
+          "O(k) or O(1)"
+        ],
+        [
+          "Fixed window",
+          "O(n)"
+        ],
+        [
+          "Variable window",
+          "O(n)"
+        ],
+        [
+          "Monotonic deque",
+          "O(n)"
+        ]
+      ],
+      "uses": [
+        "Longest substring without repeating chars",
+        "Minimum window substring",
+        "Find all anagrams in string",
+        "Max consecutive ones III",
+        "Fruit into baskets",
+        "Longest subarray with sum ≤ K",
+        "Sliding window maximum (deque)",
+        "Max points on line via window",
+        "Subarrays with K different integers",
+        "Count number of nice subarrays"
+      ]
+    },
+    {
+      "id": "backtrack",
+      "cat": "other",
+      "title": "Backtracking",
+      "badge": "badge-ds",
+      "label": "Technique",
+      "desc": "Try all possibilities by building candidates incrementally and abandoning when invalid.",
+      "ops": [
+        [
+          "Permutations",
+          "O(n×n!)"
+        ],
+        [
+          "Subsets",
+          "O(2ⁿ)"
+        ],
+        [
+          "N-Queens",
+          "O(n!)"
+        ],
+        [
+          "Sudoku",
+          "O(9^81)"
+        ],
+        [
+          "Pruning",
+          "Key optimization"
+        ]
+      ],
+      "uses": [
+        "Subsets I & II",
+        "Permutations I & II",
+        "Combination sum I & II & III",
+        "N-Queens I & II",
+        "Sudoku solver",
+        "Word search I & II",
+        "Letter combinations phone number",
+        "Palindrome partitioning",
+        "Generate parentheses",
+        "Restore IP addresses"
+      ]
+    },
+    {
+      "id": "greedy",
+      "cat": "other",
+      "title": "Greedy Algorithms",
+      "badge": "badge-ds",
+      "label": "Technique",
+      "desc": "Make locally optimal choice at each step. Works when greedy choice property holds.",
+      "ops": [
+        [
+          "Activity selection",
+          "O(n log n)"
+        ],
+        [
+          "Huffman",
+          "O(n log n)"
+        ],
+        [
+          "Fractional Knapsack",
+          "O(n log n)"
+        ],
+        [
+          "Jump Game",
+          "O(n)"
+        ],
+        [
+          "Proof",
+          "Exchange argument"
+        ]
+      ],
+      "uses": [
+        "Jump game I & II",
+        "Gas station (circular)",
+        "Assign cookies",
+        "Non-overlapping intervals",
+        "Minimum number of arrows",
+        "Task scheduler",
+        "Reorganize string",
+        "Candy distribution",
+        "Partition labels",
+        "Minimum number of platforms"
+      ]
+    },
+    {
+      "id": "divconq",
+      "cat": "other",
+      "title": "Divide & Conquer",
+      "badge": "badge-ds",
+      "label": "Technique",
+      "desc": "Split into independent subproblems, solve recursively, combine. Analyze via Master Theorem.",
+      "ops": [
+        [
+          "Merge Sort",
+          "O(n log n)"
+        ],
+        [
+          "Quick Sort",
+          "O(n log n) avg"
+        ],
+        [
+          "Binary Search",
+          "O(log n)"
+        ],
+        [
+          "Closest pair",
+          "O(n log n)"
+        ],
+        [
+          "Master Theorem",
+          "T(n)=aT(n/b)+f(n)"
+        ]
+      ],
+      "uses": [
+        "Sort list (merge sort on linked list)",
+        "Count inversions (merge sort)",
+        "Kth largest element (QuickSelect)",
+        "Median of two sorted arrays",
+        "The skyline problem",
+        "Different ways to add parentheses",
+        "Expression add operators",
+        "Longest substring with at least K repeating",
+        "Beautiful array",
+        "Closest pair of points"
+      ]
+    }
+  ]
+}

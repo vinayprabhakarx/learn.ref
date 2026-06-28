@@ -2,9 +2,7 @@
 
 /* ── Theme Management ── */
 (function() {
-  const themeBtn = document.getElementById('theme-toggle');
-  if (!themeBtn) return;
-  
+  const themeBtns = document.querySelectorAll('.theme-toggle-btn, #theme-toggle');
   const savedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
@@ -19,59 +17,68 @@
 
   applyTheme(currentTheme);
 
-  themeBtn.addEventListener('click', () => {
-    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    applyTheme(currentTheme);
-    localStorage.setItem('theme', currentTheme);
+  themeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(currentTheme);
+      localStorage.setItem('theme', currentTheme);
+    });
   });
 })();
 
-
-(async function () {
-
-  /* ── Load data ── */
-  const gridEl   = document.getElementById('ds-grid');
-  if (!gridEl) return;
-  const emptyTpl = document.getElementById('ds-empty-template');
-
-  let DATA;
-  try {
-    const res = await fetch('data.json');
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    DATA = await res.json();
-  } catch (err) {
-    showEmpty(gridEl, `Failed to load data: ${err.message}`);
+/* ── Main Router ── */
+document.addEventListener('DOMContentLoaded', async () => {
+  // If we're on the homepage, there is no layout to mount
+  if (document.querySelector('.hero-page')) {
     return;
   }
 
-  /* ── Constants ── */
-  const TAB_LABELS = Object.freeze({
-    all: 'All',
-    ds: 'Data Structures',
-    sorting: 'Sorting',
-    searching: 'Searching',
-    graph: 'Graph',
-    tree: 'Tree',
-    dp: 'Dynamic Programming',
-    other: 'Other',
-  });
+  const urlParams = new URLSearchParams(window.location.search);
+  const subjectId = urlParams.get('id') || 'dsa-data-structures'; // fallback
 
+  try {
+    const res = await fetch(`${subjectId}.json`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    
+    document.title = `${json.title} - Learn App`;
+    
+    if (json.layout === 'grid') {
+      document.getElementById('layout-grid').style.display = 'block';
+      initGridLayout(json);
+    } else if (json.layout === 'list') {
+      document.getElementById('layout-list').style.display = 'block';
+      document.getElementById('algo-subject-name').textContent = json.title.toLowerCase();
+      initListLayout(json);
+    }
+  } catch (err) {
+    console.error('Failed to load subject data:', err);
+    document.body.innerHTML = `<div style="padding: 2rem; text-align: center; color: red;">Failed to load subject data for "${subjectId}". Please check if ${subjectId}.json exists.</div>`;
+  }
+});
+
+
+/* =======================================
+   GRID LAYOUT ENGINE
+   ======================================= */
+function initGridLayout(config) {
+  const gridEl = document.getElementById('ds-grid');
+  const emptyTpl = document.getElementById('ds-empty-template');
+  
+  const DATA = config.items;
+  const TAB_LABELS = config.tabs || { all: "All" };
   const DEBOUNCE_MS = 150;
 
-  /* ── State ── */
   let activeTab = 'all';
   let openCardId = null;
 
-  /* ── DOM refs ── */
-  const tabsEl     = document.getElementById('ds-tabs');
-  const searchEl   = document.getElementById('ds-search');
+  const tabsEl = document.getElementById('ds-tabs');
+  const searchEl = document.getElementById('ds-search');
 
-  /* ── Template refs ── */
   const cardTpl = document.getElementById('ds-card-template');
-  const opTpl   = document.getElementById('ds-op-template');
-  const useTpl  = document.getElementById('ds-use-template');
+  const opTpl = document.getElementById('ds-op-template');
+  const useTpl = document.getElementById('ds-use-template');
 
-  /* ── Helpers ── */
   function showEmpty(container, msg) {
     const frag = emptyTpl.content.cloneNode(true);
     frag.querySelector('.ds-empty-msg').textContent = msg;
@@ -81,8 +88,6 @@
   function extractTopic(useCase) {
     return useCase.split('—')[0].split('(')[0].trim();
   }
-
-  /* removed local openLeetCode, using global */
 
   /* ── Build tabs ── */
   const tabFragment = document.createDocumentFragment();
@@ -154,14 +159,11 @@
   /* ── Accordion toggle ── */
   function toggleCard(card) {
     const id = card.dataset.id;
-
     if (openCardId === id) {
-      /* Close current card */
       card.classList.remove('ds-open');
       card.setAttribute('aria-expanded', 'false');
       openCardId = null;
     } else {
-      /* Close previous card if any */
       if (openCardId) {
         const prev = gridEl.querySelector(`[data-id="${openCardId}"]`);
         if (prev) {
@@ -169,7 +171,6 @@
           prev.setAttribute('aria-expanded', 'false');
         }
       }
-      /* Open new card */
       card.classList.add('ds-open');
       card.setAttribute('aria-expanded', 'true');
       openCardId = id;
@@ -178,9 +179,12 @@
 
   /* ── URL state ── */
   function syncURL() {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(window.location.search);
     if (activeTab !== 'all') params.set('tab', activeTab);
+    else params.delete('tab');
     if (searchEl.value) params.set('q', searchEl.value);
+    else params.delete('q');
+    
     const qs = params.toString();
     history.replaceState(null, '', qs ? '?' + qs : location.pathname);
   }
@@ -198,7 +202,6 @@
         b.setAttribute('aria-pressed', String(isActive));
       }
     }
-
     if (q) searchEl.value = q;
   }
 
@@ -218,7 +221,6 @@
         d.uses.some(u => u.toLowerCase().includes(q))
       );
     }
-
     return { items, query: q };
   }
 
@@ -260,7 +262,6 @@
     }
 
     card.querySelector('.ds-practice-btn').dataset.title = d.title;
-
     return frag;
   }
 
@@ -287,103 +288,26 @@
     gridEl.appendChild(fragment);
   }
 
-  /* ── Init ── */
   restoreURL();
   render();
-
-})();
-
-
-/* ── Algorithms Page Logic ── */
-
-
-/* ── DATA ── */
-
-let DSA_DATA = [];
-
-async function loadData() {
-  try {
-    const res = await fetch('algorithms-data.json');
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const json = await res.json();
-    DSA_DATA = json.topics;
-    return json;
-  } catch (err) {
-    console.error('Failed to load algorithms data:', err);
-    return null;
-  }
 }
 
-/* ── JAVA SYNTAX HIGHLIGHT ── */
 
-function highlightJava(code) {
-  // Escape HTML
-  let html = code
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+/* =======================================
+   LIST LAYOUT ENGINE
+   ======================================= */
+let LIST_DATA = [];
+function initListLayout(config) {
+  LIST_DATA = config.topics;
 
-  const tokens = [];
-  let idx = 0;
-
-  // Tokenize: extract comments, strings, chars — protect them from keyword matching
-  html = html.replace(/(\/\/[^\n]*)|('(?:[^'\\]|\\.)')|(&amp;lt;|&amp;gt;|&amp;amp;)/g, (match, comment, chr, entity) => {
-    const placeholder = `\x00${idx}\x00`;
-    if (comment) tokens.push(`<span class="algo-code-cm">${comment}</span>`);
-    else if (chr) tokens.push(`<span class="algo-code-str">${chr}</span>`);
-    else if (entity) tokens.push(entity);
-    idx++;
-    return placeholder;
-  });
-
-  // Keywords
-  const kw = 'public|private|protected|static|final|void|int|boolean|char|long|double|float|short|byte|class|interface|extends|implements|new|return|if|else|while|for|do|switch|case|break|continue|try|catch|finally|throw|throws|this|super|null|true|false|import|package|abstract|synchronized|volatile|transient|native|enum|instanceof';
-  html = html.replace(new RegExp(`\\b(${kw})\\b`, 'g'), '<span class="algo-code-kw">$1</span>');
-  // Type names (PascalCase, not already keyword-wrapped)
-  html = html.replace(/(?<!<[^>]*)\b([A-Z][A-Za-z0-9]*(?:&lt;[^&]*&gt;)?)\b/g, '<span class="algo-code-tp">$1</span>');
-  // Numbers
-  html = html.replace(/\b(\d+)\b/g, '<span class="algo-code-num">$1</span>');
-  // Method names (word followed by open paren)
-  html = html.replace(/\b([a-z][A-Za-z0-9]*)\s*(?=\()/g, '<span class="algo-code-fn">$1</span>');
-
-  // Restore protected tokens
-  html = html.replace(/\x00(\d+)\x00/g, (_, i) => tokens[parseInt(i)]);
-
-  return html;
+  buildNavTree(config);
+  buildContent();
+  buildStats();
+  setupSearch();
+  setupScrollSpy();
+  setupScrollTop();
+  setupSidebarToggle();
 }
-
-function renderCodeLines(code) {
-  const highlighted = highlightJava(code);
-  const lines = highlighted.split('\n');
-  return lines.map((line, i) =>
-    `<div class="algo-code-line"><span class="algo-code-ln">${i + 1}</span><span class="algo-code-text">${line}</span></div>`
-  ).join('');
-}
-
-/* ── COPY CODE ── */
-
-function copyCode(btn) {
-  const block = btn.closest('.algo-code-wrapper').querySelector('.algo-code-block');
-  const raw = block.dataset.raw;
-  navigator.clipboard.writeText(raw).then(() => {
-    btn.textContent = 'Copied!';
-    btn.classList.add('algo-copied');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('algo-copied'); }, 1800);
-  }).catch(() => {
-    const ta = document.createElement('textarea');
-    ta.value = raw;
-    ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    btn.textContent = 'Copied!';
-    btn.classList.add('algo-copied');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('algo-copied'); }, 1800);
-  });
-}
-
-/* ── BUILD NAV ── */
 
 function buildNavTree(config) {
   const tree = document.getElementById('algo-nav-tree');
@@ -399,7 +323,7 @@ function buildNavTree(config) {
     groupFrag.querySelector('.algo-nav-label').textContent = sec.label;
 
     sec.ids.forEach(id => {
-      const topic = DSA_DATA.find(t => t.id === id);
+      const topic = LIST_DATA.find(t => t.id === id);
       if (!topic) return;
       
       const itemFrag = itemTpl.content.cloneNode(true);
@@ -427,15 +351,13 @@ function buildNavTree(config) {
   tree.appendChild(fragment);
 }
 
-/* ── BUILD CONTENT ── */
-
 function buildContent() {
   const container = document.getElementById('algo-topics-container');
   const topicTpl = document.getElementById('algo-topic-template');
   
   const fragment = document.createDocumentFragment();
 
-  DSA_DATA.forEach(topic => {
+  LIST_DATA.forEach(topic => {
     const topicFrag = topicTpl.content.cloneNode(true);
     const section = topicFrag.querySelector('.algo-topic');
     section.id = topic.id;
@@ -452,7 +374,7 @@ function buildContent() {
     titleEl.textContent = topic.title;
 
     const countRaw = topic.algos ? topic.algos.length : 0;
-    topicFrag.querySelector('.algo-topic-count').textContent = `${countRaw} algo${countRaw > 1 ? 's' : ''}`;
+    topicFrag.querySelector('.algo-topic-count').textContent = `${countRaw} item${countRaw > 1 || countRaw === 0 ? 's' : ''}`;
 
     if (topic.algos) {
       topic.algos.forEach((algo, ai) => {
@@ -476,40 +398,61 @@ function buildAlgoCard(algo, id) {
   
   const head = frag.querySelector('.algo-card-head');
   head.setAttribute('aria-controls', `${id}-body`);
-  head.addEventListener('click', () => toggleCard(id));
+  head.addEventListener('click', () => toggleListCard(id));
   
   frag.querySelector('.algo-card-name').textContent = algo.name;
-  frag.querySelector('.algo-badge-time').textContent = `T: ${algo.complexities.avg}`;
-  frag.querySelector('.algo-badge-space').textContent = `S: ${algo.complexities.space}`;
+  
+  if (algo.complexities) {
+    frag.querySelector('.algo-badge-time').textContent = `T: ${algo.complexities.avg}`;
+    frag.querySelector('.algo-badge-space').textContent = `S: ${algo.complexities.space}`;
+  } else {
+    frag.querySelector('.algo-card-badges').style.display = 'none';
+    frag.querySelector('.algo-complexity').style.display = 'none';
+  }
   
   frag.querySelector('.algo-card-body').id = `${id}-body`;
   frag.querySelector('.algo-desc').textContent = algo.desc;
   
   const stepsList = frag.querySelector('.algo-steps');
-  if (algo.approach) {
+  if (algo.approach && algo.approach.length > 0) {
     algo.approach.forEach(step => {
       const li = document.createElement('li');
       li.textContent = step;
       stepsList.appendChild(li);
     });
+  } else {
+    stepsList.previousElementSibling.style.display = 'none';
+    stepsList.style.display = 'none';
   }
   
-  frag.querySelector('.algo-tc-best').textContent = algo.complexities.best;
-  frag.querySelector('.algo-tc-avg').textContent = algo.complexities.avg;
-  frag.querySelector('.algo-tc-worst').textContent = algo.complexities.worst;
-  frag.querySelector('.algo-tc-space').textContent = algo.complexities.space;
+  if (algo.complexities) {
+    frag.querySelector('.algo-tc-best').textContent = algo.complexities.best;
+    frag.querySelector('.algo-tc-avg').textContent = algo.complexities.avg;
+    frag.querySelector('.algo-tc-worst').textContent = algo.complexities.worst;
+    frag.querySelector('.algo-tc-space').textContent = algo.complexities.space;
+  }
   
   const codeBlock = frag.querySelector('.algo-code-block');
-  codeBlock.dataset.raw = algo.code;
-  codeBlock.innerHTML = renderCodeLines(algo.code);
+  if (algo.code) {
+    codeBlock.dataset.raw = algo.code;
+    codeBlock.innerHTML = renderCodeLines(algo.code);
+  } else {
+    codeBlock.closest('.algo-code-wrapper').previousElementSibling.style.display = 'none';
+    codeBlock.closest('.algo-code-wrapper').style.display = 'none';
+  }
   
-  frag.querySelector('.algo-tip').textContent = `💡 ${algo.tip}`;
+  if (algo.tip) {
+    frag.querySelector('.algo-tip').textContent = `💡 ${algo.tip}`;
+  } else {
+    frag.querySelector('.algo-tip').previousElementSibling.style.display = 'none';
+    frag.querySelector('.algo-tip').style.display = 'none';
+  }
   
   const qContainer = frag.querySelector('.algo-questions');
   const qCount = algo.questions ? algo.questions.length : 0;
-  frag.querySelector('.algo-prob-count').textContent = qCount;
   
-  if (algo.questions) {
+  if (algo.questions && algo.questions.length > 0) {
+    frag.querySelector('.algo-prob-count').textContent = qCount;
     const diffClass = { Easy: 'diff-easy', Medium: 'diff-med', Hard: 'diff-hard' };
     algo.questions.forEach(q => {
       const qFrag = qTpl.content.cloneNode(true);
@@ -525,42 +468,35 @@ function buildAlgoCard(algo, id) {
       
       qContainer.appendChild(qFrag);
     });
+  } else {
+    qContainer.previousElementSibling.style.display = 'none';
+    qContainer.style.display = 'none';
   }
   
   return frag;
 }
 
-/* ── INTERACTIONS ── */
+/* ── LIST INTERACTIONS ── */
+let openListCardId = null;
 
-let openCardId = null;
-
-function toggleCard(id) {
+function toggleListCard(id) {
   const card = document.getElementById(id);
-
-  if (openCardId === id) {
-    // Close current card
+  if (openListCardId === id) {
     card.classList.remove('algo-open');
     card.querySelector('.algo-card-head').setAttribute('aria-expanded', 'false');
-    openCardId = null;
+    openListCardId = null;
   } else {
-    // Close previously open card
-    if (openCardId) {
-      const prev = document.getElementById(openCardId);
+    if (openListCardId) {
+      const prev = document.getElementById(openListCardId);
       if (prev) {
         prev.classList.remove('algo-open');
         prev.querySelector('.algo-card-head').setAttribute('aria-expanded', 'false');
       }
     }
-    // Open new card
     card.classList.add('algo-open');
     card.querySelector('.algo-card-head').setAttribute('aria-expanded', 'true');
-    openCardId = id;
+    openListCardId = id;
   }
-}
-
-function openLeetCode(topic) {
-  const LEETCODE_URL = 'https://leetcode.com/search/?q=';
-  window.open(LEETCODE_URL + encodeURIComponent(topic), '_blank', 'noopener,noreferrer');
 }
 
 function scrollToSection(id) {
@@ -602,7 +538,7 @@ function setupSearch() {
 }
 
 function setupScrollSpy() {
-  const sections = DSA_DATA.map(t => document.getElementById(t.id)).filter(Boolean);
+  const sections = LIST_DATA.map(t => document.getElementById(t.id)).filter(Boolean);
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -629,7 +565,7 @@ function setupScrollTop() {
   });
 }
 
-function toggleSidebar() {
+window.toggleSidebar = function() {
   document.getElementById('algo-sidebar').classList.toggle('algo-open');
 }
 
@@ -637,16 +573,12 @@ function setupSidebarToggle() {
   document.addEventListener('click', (e) => {
     const sidebar = document.getElementById('algo-sidebar');
     const menuBtn = document.querySelector('.algo-menu-btn');
-    
-    // If sidebar is open and the click is outside the sidebar AND outside the menu button
     if (sidebar.classList.contains('algo-open')) {
       if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
         sidebar.classList.remove('algo-open');
       }
     }
   });
-
-  // Also close sidebar when a navigation link is clicked inside it
   document.querySelectorAll('.algo-nav-item').forEach(link => {
     link.addEventListener('click', () => {
       const sidebar = document.getElementById('algo-sidebar');
@@ -664,7 +596,7 @@ function buildStats() {
   let algoCount = 0;
   let probCount = 0;
   
-  DSA_DATA.forEach(topic => {
+  LIST_DATA.forEach(topic => {
     if (topic.algos) {
       algoCount += topic.algos.length;
       topic.algos.forEach(algo => {
@@ -676,24 +608,67 @@ function buildStats() {
   });
 
   statsEl.innerHTML = `
-    <span><strong>${DSA_DATA.length}</strong> Topics</span>
-    <span><strong>${algoCount}</strong> Algorithms</span>
-    <span><strong>${probCount}</strong> Problems</span>
+    <span><strong>${LIST_DATA.length}</strong> Topics</span>
+    <span><strong>${algoCount}</strong> Items</span>
   `;
 }
 
-/* ── INIT ── */
+/* ── COMMON HELPERS ── */
+function openLeetCode(topic) {
+  const URL = 'https://google.com/search?q=leetcode+';
+  window.open(URL + encodeURIComponent(topic), '_blank', 'noopener,noreferrer');
+}
 
-document.addEventListener('DOMContentLoaded', async () => {
-  if (!document.getElementById('algo-sidebar')) return;
-  const config = await loadData();
-  if (!config) return;
+function highlightJava(code) {
+  let html = code
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+  const tokens = [];
+  let idx = 0;
+  html = html.replace(/(\/\/[^\n]*)|('(?:[^'\\]|\\.)')|(&amp;lt;|&amp;gt;|&amp;amp;)/g, (match, comment, chr, entity) => {
+    const placeholder = `\x00${idx}\x00`;
+    if (comment) tokens.push(`<span class="algo-code-cm">${comment}</span>`);
+    else if (chr) tokens.push(`<span class="algo-code-str">${chr}</span>`);
+    else if (entity) tokens.push(entity);
+    idx++;
+    return placeholder;
+  });
+  const kw = 'public|private|protected|static|final|void|int|boolean|char|long|double|float|short|byte|class|interface|extends|implements|new|return|if|else|while|for|do|switch|case|break|continue|try|catch|finally|throw|throws|this|super|null|true|false|import|package|abstract|synchronized|volatile|transient|native|enum|instanceof|const|let|var|function|export|import';
+  html = html.replace(new RegExp(`\\b(${kw})\\b`, 'g'), '<span class="algo-code-kw">$1</span>');
+  html = html.replace(/(?<!<[^>]*)\b([A-Z][A-Za-z0-9]*(?:&lt;[^&]*&gt;)?)\b/g, '<span class="algo-code-tp">$1</span>');
+  html = html.replace(/\b(\d+)\b/g, '<span class="algo-code-num">$1</span>');
+  html = html.replace(/\b([a-z][A-Za-z0-9]*)\s*(?=\()/g, '<span class="algo-code-fn">$1</span>');
+  html = html.replace(/\x00(\d+)\x00/g, (_, i) => tokens[parseInt(i)]);
+  return html;
+}
 
-  buildNavTree(config);
-  buildContent();
-  buildStats();
-  setupSearch();
-  setupScrollSpy();
-  setupScrollTop();
-  setupSidebarToggle();
-});
+function renderCodeLines(code) {
+  if (!code) return '';
+  const highlighted = highlightJava(code);
+  const lines = highlighted.split('\n');
+  return lines.map((line, i) =>
+    `<div class="algo-code-line"><span class="algo-code-ln">${i + 1}</span><span class="algo-code-text">${line}</span></div>`
+  ).join('');
+}
+
+window.copyCode = function(btn) {
+  const block = btn.closest('.algo-code-wrapper').querySelector('.algo-code-block');
+  const raw = block.dataset.raw;
+  navigator.clipboard.writeText(raw).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('algo-copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('algo-copied'); }, 1800);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = raw;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = 'Copied!';
+    btn.classList.add('algo-copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('algo-copied'); }, 1800);
+  });
+}
