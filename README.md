@@ -1,4 +1,4 @@
-# Learn App
+# /Learn.ref
 
 A lightning-fast, zero-dependency web app designed as a modular learning hub. Originally built as a "DSA Reference", the application is now decoupled and capable of hosting an infinite number of subjects (like Data Structures, Kubernetes, Web Development, etc.) without cluttering the frontend logic.
 
